@@ -1,0 +1,38 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "gestion de stagiaire",
+            "database": "/Users/mac/Documents/gestion_de_stagiaire.db"
+        },
+        {
+            "oracleOptions": {
+                "privilege": "Normal",
+                "thickMode": false,
+                "autoCommit": false,
+                "lowerCase": false,
+                "limitPrefetchRows": false
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 1521,
+            "askForPassword": true,
+            "driver": "Oracle",
+            "name": "le s ",
+            "database": "\"/Users/mac/matrix.1/projet DS1-No.sql\"",
+            "username": "le s"
+        },
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "salim",
+            "username": "mac",
+            "password": "salim",
+            "database": "clinique"
+        }
+    ]
+}

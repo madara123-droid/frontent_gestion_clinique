@@ -1,0 +1,58 @@
+@startuml
+' =========================
+' Définition des classes
+' =========================
+class Patient {
+  - idPatient : int
+  - nom : String
+  - prenom : String
+  - dateNaissance : Date
+}
+
+class DossierPatient {
+  - idDossier : int
+  - historiqueMedical : String
+}
+
+class RendezVous {
+  - idRDV : int
+  - date : Date
+  - heure : String
+}
+
+class Medecin {
+  - idMedecin : int
+  - nom : String
+  - specialite : String
+}
+
+class Facture {
+  - idFacture : int
+  - montant : double
+  - statut : String
+}
+
+class Employe {
+  - idEmploye : int
+  - nom : String
+  - prenom : String
+  - contrat : String
+  - salaire : double
+}
+
+' =========================
+' Héritage
+' =========================
+Employe <|-- Medecin
+Employe <|-- Infirmier
+Employe <|-- RH
+Employe <|-- AdministrateurFinancier
+
+' =========================
+' Associations
+' =========================
+Patient "1" -- "1" DossierPatient
+Patient "1" -- "0..*" RendezVous
+Medecin "1" -- "0..*" RendezVous
+Patient "1" -- "0..*" Facture
+@enduml
