@@ -1,0 +1,40 @@
+.patient-list {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.patient-list h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.no-patients {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 5px;
+  text-align: center;
+  color: #6c757d;
+}
+
+.patient-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.patient-table th {
+  background-color: #3498db;
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+.patient-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.patient-table tr:hover {
+  background-color: #f8f9fa;
+}

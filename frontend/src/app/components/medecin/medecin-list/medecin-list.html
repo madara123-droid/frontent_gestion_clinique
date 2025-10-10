@@ -1,0 +1,29 @@
+<div class="medecin-list">
+    <h2>📋 Liste des Médecins</h2>
+
+    <div *ngIf="medecins.length === 0" class="no-medecins">
+        Aucun médecin trouvé.
+    </div>
+    <table *ngIf="medecins.length > 0" class="medecin-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Specialite</th>
+                <th>Telephone</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let medecin of medecins">
+                <td>{{medecin.idmedecin}}</td>
+                <td>{{medecin.nom}}</td>
+                <td>{{medecin.prenom}}</td>
+                <td>{{medecin.specialite}}</td>
+                <td>{{medecin.telephone}}</td>
+                <td>{{medecin.email}}</td>
+            </tr>
+        </tbody>
+        </table>
+</div>

@@ -1,0 +1,31 @@
+<div class="patient-list">
+  <h2>📋 Liste des Patients</h2>
+  
+  <!-- Message si aucun patient -->
+  <div *ngIf="patients.length === 0" class="no-patients">
+    Aucun patient trouvé.
+  </div>
+
+  <!-- Tableau des patients -->
+  <table *ngIf="patients.length > 0" class="patient-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Date de Naissance</th>
+        <th>Téléphone</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Boucle sur chaque patient -->
+      <tr *ngFor="let patient of patients">
+        <td>{{ patient.idpatient }}</td>
+        <td>{{ patient.nom }}</td>
+        <td>{{ patient.prenom }}</td>
+        <td>{{ patient.date_naissance | date:'dd/MM/yyyy' }}</td>
+        <td>{{ patient.telephone }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

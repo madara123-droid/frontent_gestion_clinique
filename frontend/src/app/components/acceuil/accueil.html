@@ -1,0 +1,100 @@
+<!-- Conteneur principal de toute la page d'accueil -->
+<div class="accueil-container">
+
+  <!-- ======== En-tête ======== -->
+  <header class="accueil-header">
+    <!-- Titre principal de la page -->
+    <h1>🏥 Bienvenue à la Clinique Médicale</h1>
+
+    <!-- Sous-titre ou phrase d’introduction -->
+    <p class="sous-titre">Gestion complète de votre établissement de santé</p>
+  </header>
+
+  <!-- ======== Section des statistiques ======== -->
+  <section class="stats-section">
+    <!-- Titre de la section -->
+    <h2>📊 Aperçu du jour</h2>
+
+    <!-- Grille contenant les cartes de statistiques -->
+    <div class="stats-grid">
+
+      <!-- Carte affichant le nombre de patients -->
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-info">
+          <!-- Affiche la valeur du champ "patients" depuis le composant TypeScript -->
+          <h3>{{ stats.patients }}</h3>
+          <p>Patients enregistrés</p>
+        </div>
+      </div>
+      
+      <!-- Carte affichant le nombre de médecins -->
+      <div class="stat-card">
+        <div class="stat-icon">👨‍⚕️</div>
+        <div class="stat-info">
+          <!-- Interpolation Angular : affiche stats.medecins -->
+          <h3>{{ stats.medecins }}</h3>
+          <p>Médecins actifs</p>
+        </div>
+      </div>
+      
+      <!-- Carte affichant le nombre de rendez-vous du jour -->
+      <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <div class="stat-info">
+          <!-- Interpolation Angular : affiche stats.rendezVousAujourdhui -->
+          <h3>{{ stats.rendezVousAujourdhui }}</h3>
+          <p>Rendez-vous aujourd'hui</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== Navigation rapide ======== -->
+  <section class="navigation-section">
+    <h2>🚀 Accès rapide</h2>
+
+    <!-- Grille contenant les liens vers d'autres pages -->
+    <div class="nav-grid">
+
+      <!-- Lien interne vers la page des patients -->
+      <a routerLink="/patients" class="nav-card">
+        <div class="nav-icon">📋</div>
+        <h3>Gestion des Patients</h3>
+        <p>Consulter et gérer les dossiers patients</p>
+      </a>
+      
+      <!-- Lien interne vers la page des médecins -->
+      <a routerLink="/medecins" class="nav-card">
+        <div class="nav-icon">👨‍⚕️</div>
+        <h3>Gestion des Médecins</h3>
+        <p>Voir l'équipe médicale et leurs spécialités</p>
+      </a>
+      
+      <!-- Lien interne vers la page du planning -->
+      <a routerLink="/rendezvous" class="nav-card">
+        <div class="nav-icon">📅</div>
+        <h3>Planning des Rendez-vous</h3>
+        <p>Gérer l'agenda des consultations</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ======== Actions rapides ======== -->
+  <section class="actions-section">
+    <h2>⚡ Actions rapides</h2>
+
+    <!-- Boutons pour créer rapidement un patient ou un rendez-vous -->
+    <div class="actions-buttons">
+      <!-- Bouton redirigeant vers la création d'un patient -->
+      <button class="btn btn-primary" routerLink="/patients/nouveau">
+        + Nouveau Patient
+      </button>
+
+      <!-- Bouton redirigeant vers la création d'un rendez-vous -->
+      <button class="btn btn-secondary" routerLink="/rendezvous/nouveau">
+        + Nouveau Rendez-vous
+      </button>
+    </div>
+  </section>
+</div>
