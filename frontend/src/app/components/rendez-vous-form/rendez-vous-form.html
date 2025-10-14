@@ -1,0 +1,112 @@
+ <div class="rendezvous-form-container">
+  <div class="form-card">
+    <header class="form-header">
+      <h2>📅 Nouveau Rendez-vous</h2>
+      <p>Complétez les informations pour prendre un nouveau rendez-vous</p>
+    </header>
+
+    <form (ngSubmit)="onSubmit()" #rendezVousForm="ngForm" class="rendezvous-form">
+      
+      <!-- Sélection du Patient -->
+      <div class="form-group">
+        <label for="patient">Patient *</label>
+        <select 
+          id="patient"
+          name="patientId" 
+          [(ngModel)]="nouveauRendezVous.patientId"
+          required
+          class="form-control">
+          <option value="">Sélectionnez un patient</option>
+          <option *ngFor="let patient of patients" [value]="patient.idpatient">
+            {{ patient.prenom }} {{ patient.nom }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Sélection du Médecin -->
+      <div class="form-group">
+        <label for="medecin">Médecin *</label>
+        <select 
+          id="medecin"
+          name="medecinId" 
+          [(ngModel)]="nouveauRendezVous.medecinId"
+          required
+          class="form-control">
+          <option value="">Sélectionnez un médecin</option>
+          <option *ngFor="let medecin of medecins" [value]="medecin.idmedecin">
+            Dr {{ medecin.prenom }} {{ medecin.nom }} - {{ medecin.specialite }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Date du rendez-vous -->
+      <div class="form-group">
+        <label for="date">Date *</label>
+        <input 
+          type="date" 
+          id="date"
+          name="date" 
+          [(ngModel)]="nouveauRendezVous.date"
+          required
+          class="form-control">
+      </div>
+
+      <!-- Heure du rendez-vous -->
+      <div class="form-group">
+        <label for="heure">Heure *</label>
+        <select 
+          id="heure"
+          name="heure" 
+          [(ngModel)]="nouveauRendezVous.heure"
+          required
+          class="form-control">
+          <option *ngFor="let heure of heuresDisponibles" [value]="heure">
+            {{ heure }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Durée -->
+      <div class="form-group">
+        <label for="duree">Durée (minutes) *</label>
+        <select 
+          id="duree"
+          name="duree" 
+          [(ngModel)]="nouveauRendezVous.duree"
+          required
+          class="form-control">
+          <option value="15">15 minutes</option>
+          <option value="30">30 minutes</option>
+          <option value="45">45 minutes</option>
+          <option value="60">1 heure</option>
+        </select>
+      </div>
+
+      <!-- Motif de la consultation -->
+      <div class="form-group">
+        <label for="motif">Motif de la consultation *</label>
+        <textarea 
+          id="motif"
+          name="motif" 
+          [(ngModel)]="nouveauRendezVous.motif"
+          required
+          placeholder="Décrivez le motif de la consultation..."
+          rows="3"
+          class="form-control"></textarea>
+      </div>
+
+      <!-- Boutons d'action -->
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" (click)="annuler()">
+          Annuler
+        </button>
+        <button 
+          type="submit" 
+          class="btn btn-primary"
+          [disabled]="!rendezVousForm.form.valid">
+          Confirmer le Rendez-vous
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

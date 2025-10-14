@@ -14,14 +14,14 @@ Components/
 Services/
 ├── patient.service
 ├── medecin.service  
-├── rendezvous.service - À CRÉER
+├── rendezvous.service 
 ├── facture.service - À CRÉER
 └── ordonnance.service - À CRÉER
 
 Models/
 ├── patient
 ├── medecin
-├── rendezvous - À CRÉER
-├── facture - À CRÉER
+├── rendezvous 
+├── facture - a CRÉER
 ├── ordonnance - À CRÉER
 └── hospitalisation - À CRÉER

@@ -5,9 +5,11 @@ import { PatientListComponent } from './components/patient-list/patient-list';
 import { MedecinListComponent } from './components/medecin/medecin-list/medecin-list';
 import { AccueilComponent } from './components/acceuil/accueil';
 import { RendezVousListComponnent } from './components/rendez-vous-list/rendez-vous-list';
-
+import { RendezVousFormComponent } from './components/rendez-vous-form/rendez-vous-form';
 export const routes: Routes = [
+  
  {path: '', component:AccueilComponent},
+  { path: 'rendezvous/nouveau', component: RendezVousFormComponent }, // ⭐ NOUVEAU
  {path: 'rendezvous', component: RendezVousListComponnent},
   { path: 'patients', component: PatientListComponent },
   { path: 'medecins', component: MedecinListComponent },
