@@ -1,150 +1,159 @@
+/* Conteneur principal de la page d'accueil */
 .accueil-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  max-width: 1200px;    /* largeur maximale du contenu */
+  margin: 0 auto;       /* centre le conteneur horizontalement */
+  padding: 20px;        /* espace intérieur autour du contenu */
 }
 
+/* En-tête de la page */
 .accueil-header {
-  text-align: center;
-  margin-bottom: 40px;
+  text-align: center;   /* centre le texte horizontalement */
+  margin-bottom: 40px;  /* espace en bas de l'en-tête */
 }
 
 .accueil-header h1 {
-  color: #2c3e50;
-  margin-bottom: 10px;
+  color: #2c3e50;       /* couleur du texte principal */
+  margin-bottom: 10px;  /* espace en dessous du titre */
 }
 
+/* Sous-titre de l'en-tête */
 .sous-titre {
-  color: #7f8c8d;
-  font-size: 1.2em;
+  color: #7f8c8d;       /* couleur grise pour sous-titre */
+  font-size: 1.2em;     /* taille du texte légèrement plus grande que normal */
 }
 
-/* Section Statistiques */
+/* ===================== Section Statistiques ===================== */
 .stats-section {
-  margin-bottom: 40px;
+  margin-bottom: 40px;  /* espace sous la section statistiques */
 }
 
 .stats-section h2 {
-  color: #34495e;
-  margin-bottom: 20px;
+  color: #34495e;       /* couleur du titre */
+  margin-bottom: 20px;  /* espace sous le titre */
 }
 
+/* Grille des cartes statistiques */
 .stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  display: grid;                                /* utilise CSS Grid */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+  /* crée autant de colonnes que possible, chaque colonne minimum 250px et flexible */
+  gap: 20px;                                    /* espace entre les cartes */
 }
 
+/* Carte individuelle */
 .stat-card {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  display: flex;
-  align-items: center;
-  gap: 15px;
+  background: white;                             /* fond blanc */
+  padding: 20px;                                 /* espace intérieur */
+  border-radius: 10px;                           /* coins arrondis */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);       /* ombre légère pour effet profondeur */
+  display: flex;                                 /* flexbox pour aligner icône et texte */
+  align-items: center;                           /* centre verticalement les éléments */
+  gap: 15px;                                     /* espace entre icône et texte */
 }
 
+/* Icône dans la carte */
 .stat-icon {
-  font-size: 2em;
+  font-size: 2em;       /* taille de l’icône */
 }
 
+/* Informations dans la carte */
 .stat-info h3 {
-  font-size: 2em;
-  color: #3498db;
-  margin: 0;
+  font-size: 2em;       /* taille du chiffre/statistique */
+  color: #3498db;       /* couleur bleue */
+  margin: 0;             /* aucun espace autour */
 }
 
 .stat-info p {
-  color: #7f8c8d;
-  margin: 0;
+  color: #7f8c8d;       /* couleur grise */
+  margin: 0;             /* aucun espace autour */
 }
 
-/* Navigation */
+/* ===================== Navigation ===================== */
 .navigation-section {
-  margin-bottom: 40px;
+  margin-bottom: 40px;  /* espace sous la section navigation */
 }
 
 .navigation-section h2 {
-  color: #34495e;
-  margin-bottom: 20px;
+  color: #34495e;       /* couleur du titre de section */
+  margin-bottom: 20px;  /* espace sous le titre */
 }
 
 .nav-grid {
-  display: grid;
+  display: grid;                                /* grille pour les cartes de navigation */
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  gap: 20px;                                    /* espace entre les cartes */
 }
 
+/* Carte de navigation */
 .nav-card {
-  background: white;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  text-decoration: none;
-  color: inherit;
-  transition: transform 0.3s ease;
-  display: block;
+  background: white;                             /* fond blanc */
+  padding: 25px;                                 /* espace intérieur */
+  border-radius: 10px;                           /* coins arrondis */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);       /* ombre légère */
+  text-decoration: none;                         /* supprime soulignement lien */
+  color: inherit;                                /* hérite de la couleur parent */
+  transition: transform 0.3s ease;               /* transition pour effet hover */
+  display: block;                                /* affiche en bloc pour lien entier cliquable */
 }
 
 .nav-card:hover {
-  transform: translateY(-5px);
-  text-decoration: none;
-  color: inherit;
+  transform: translateY(-5px);                  /* effet de léger déplacement vers le haut au survol */
+  text-decoration: none;                        /* toujours pas de soulignement */
+  color: inherit;                               /* conserve couleur du texte */
 }
 
 .nav-icon {
-  font-size: 2.5em;
-  margin-bottom: 15px;
+  font-size: 2.5em;       /* taille icône navigation */
+  margin-bottom: 15px;    /* espace sous l’icône */
 }
 
 .nav-card h3 {
-  color: #2c3e50;
-  margin-bottom: 10px;
+  color: #2c3e50;         /* couleur titre de la carte */
+  margin-bottom: 10px;    /* espace sous le titre */
 }
 
 .nav-card p {
-  color: #7f8c8d;
-  margin: 0;
+  color: #7f8c8d;         /* couleur texte descriptif */
+  margin: 0;               /* aucun espace autour */
 }
 
-/* Actions */
+/* ===================== Actions ===================== */
 .actions-section h2 {
-  color: #34495e;
-  margin-bottom: 20px;
+  color: #34495e;         /* couleur du titre */
+  margin-bottom: 20px;    /* espace sous le titre */
 }
 
 .actions-buttons {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
+  display: flex;           /* aligne les boutons horizontalement */
+  gap: 15px;               /* espace entre les boutons */
+  flex-wrap: wrap;         /* passe à la ligne si espace insuffisant */
 }
 
 .btn {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1em;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-  transition: background-color 0.3s ease;
+  padding: 12px 24px;      /* espace intérieur du bouton */
+  border: none;             /* pas de bordure */
+  border-radius: 5px;       /* coins arrondis */
+  font-size: 1em;           /* taille du texte */
+  cursor: pointer;          /* pointeur main au survol */
+  text-decoration: none;    /* pas de soulignement */
+  display: inline-block;    /* comportement bloc en ligne */
+  transition: background-color 0.3s ease; /* animation couleur */
 }
 
 .btn-primary {
-  background-color: #3498db;
-  color: white;
+  background-color: #3498db;  /* couleur principale bleu */
+  color: white;                /* texte blanc */
 }
 
 .btn-primary:hover {
-  background-color: #2980b9;
+  background-color: #2980b9;  /* couleur bleu plus foncé au survol */
 }
 
 .btn-secondary {
-  background-color: #95a5a6;
-  color: white;
+  background-color: #95a5a6;  /* gris clair */
+  color: white;                /* texte blanc */
 }
 
 .btn-secondary:hover {
-  background-color: #7f8c8d;
+  background-color: #7f8c8d;  /* gris plus foncé au survol */
 }

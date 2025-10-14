@@ -1,58 +1,23 @@
-@startuml
-' =========================
-' Définition des classes
-' =========================
-class Patient {
-  - idPatient : int
-  - nom : String
-  - prenom : String
-  - dateNaissance : Date
-}
+@startuml diagramme_de_sequence
 
-class DossierPatient {
-  - idDossier : int
-  - historiqueMedical : String
-}
 
-class RendezVous {
-  - idRDV : int
-  - date : Date
-  - heure : String
-}
+actor Patient
+participant SecretaireMedicale
+participant RendezVous
+participant Medecin
+participant Facture
 
-class Medecin {
-  - idMedecin : int
-  - nom : String
-  - specialite : String
-}
+== Prise de rendez-vous ==
+Patient -> SecretaireMedicale : demanderRendezVous(date, heure)
+SecretaireMedicale -> RendezVous : creerRendezVous(date, heure, patient, medecin)
+RendezVous -> SecretaireMedicale : confirmationRDV()
+SecretaireMedicale -> Patient : confirmerRDV()
 
-class Facture {
-  - idFacture : int
-  - montant : double
-  - statut : String
-}
+== Consultation ==
+Patient -> Medecin : sePresenter(rdv)
+Medecin -> Patient : effectuerConsultation()
 
-class Employe {
-  - idEmploye : int
-  - nom : String
-  - prenom : String
-  - contrat : String
-  - salaire : double
-}
-
-' =========================
-' Héritage
-' =========================
-Employe <|-- Medecin
-Employe <|-- Infirmier
-Employe <|-- RH
-Employe <|-- AdministrateurFinancier
-
-' =========================
-' Associations
-' =========================
-Patient "1" -- "1" DossierPatient
-Patient "1" -- "0..*" RendezVous
-Medecin "1" -- "0..*" RendezVous
-Patient "1" -- "0..*" Facture
+== Génération de facture ==
+Medecin -> Facture : creerFacture(montant, statut="en attente")
+Facture -> Patient : envoyerFacture()
 @enduml

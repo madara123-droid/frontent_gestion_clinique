@@ -1,10 +1,10 @@
 module.exports = function (config) {
   config.set({
-    basePath: '',
-    frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    basePath: '',//. ici c'est le chemin de base pour les fichiers
+    frameworks: ['jasmine', '@angular-devkit/build-angular'],//ici tu as les outils qui vont servit au test 
     plugins: [
       require('karma-jasmine'),
-      require('karma-safari-launcher'),
+      require('karma-firefox-launcher'), // <-- ajouter ici
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma')
@@ -21,7 +21,7 @@ module.exports = function (config) {
       ]
     },
     reporters: ['progress', 'kjhtml'],
-    browsers: ['Safari'],
+    browsers: ['Firefox'],
     autoWatch: true,
     singleRun: false,
     restartOnFileChange: true

@@ -1,0 +1,27 @@
+plan 
+
+Components/
+
+├── accueil/ (statistiques)
+├── patient-list/ (liste patients)
+├── patient-detail/ (dossier patient) - À CRÉER
+├── medecin-list/ (liste médecins)
+├── rendezvous-list/ (agenda) - À CRÉER
+├── rendezvous-form/ (prise RDV) - À CRÉER
+├── facture-list/ (factures) - À CRÉER
+└── ordonnance-form/ (ordonnances) - À CRÉER
+
+Services/
+├── patient.service
+├── medecin.service  
+├── rendezvous.service - À CRÉER
+├── facture.service - À CRÉER
+└── ordonnance.service - À CRÉER
+
+Models/
+├── patient
+├── medecin
+├── rendezvous - À CRÉER
+├── facture - À CRÉER
+├── ordonnance - À CRÉER
+└── hospitalisation - À CRÉER

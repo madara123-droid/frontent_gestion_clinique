@@ -1,0 +1,41 @@
+@startuml diagramme_gestion_hospitaliere
+left to right direction
+
+actor Patient
+actor Medecin
+actor SecretaireMedicale
+actor Infirmier
+actor AideSoignant
+actor AdministrateurFinancier
+actor Direction
+actor RH
+
+rectangle "Système de gestion hospitalière" {
+  
+  usecase "Prendre rendez-vous" as UC1
+  usecase "Consulter dossier patient" as UC2
+  usecase "Effectuer consultation" as UC3
+  usecase "Établir ordonnance" as UC4
+  usecase "Émettre facture" as UC5
+  usecase "Payer facture" as UC6
+  usecase "Gérer hospitalisation" as UC7
+  usecase "Gérer employés" as UC8
+}
+
+' Relations
+Patient -- UC1
+SecretaireMedicale -- UC1
+Medecin -- UC2
+Medecin -- UC3
+Medecin -- UC4
+Patient -- UC2
+Patient -- UC3
+Patient -- UC4
+AdministrateurFinancier -- UC5
+Patient -- UC6
+Infirmier -- UC7
+AideSoignant -- UC7
+Patient -- UC7
+RH -- UC8
+Direction -- UC8
+@enduml

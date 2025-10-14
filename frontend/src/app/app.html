@@ -1,15 +1,31 @@
+<!-- Conteneur principal de toute l’application -->
 <div class="app-container">
+
+  <!-- ======== En-tête de l'application ======== -->
   <header class="app-header">
+    <!-- Titre global -->
     <h1>🏥 Gestion Clinique</h1>
+
+    <!-- Barre de navigation -->
     <nav>
-      <a routerlink="/" routerLinkActive="active ">Acceuil</a>>
-      <a routerLink="/patients">Patients</a>
-      <a routerLink="/medecins">Médecins</a>
+      <!-- Lien vers la page d'accueil -->
+      <a routerLink="rendezvous" routerLinkActive="active">Accueil</a>
+
+      <a routerLink="/" routerLinkActive="active">Accueil</a>
+
+      <!-- Lien vers la page des patients -->
+      <a routerLink="/patients" routerLinkActive="active">Patients</a>
+
+      <!-- Lien vers la page des médecins -->
+      <a routerLink="/medecins" routerLinkActive="active">Médecins</a>
     </nav>
   </header>
 
+  <!-- ======== Contenu principal ======== -->
   <main class="app-main">
-    <!-- ⭐ UNIQUEMENT le RouterOutlet -->
+    <!-- ⭐ Le RouterOutlet : c’est ici qu’Angular affiche le contenu des routes -->
+    <!-- Exemple : si tu vas sur /patients → le composant PatientListComponent s’affiche ici -->
     <router-outlet></router-outlet>
   </main>
+
 </div>

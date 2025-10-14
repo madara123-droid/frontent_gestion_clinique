@@ -1,0 +1,51 @@
+<div class="rendezvous-list">
+  <header class="list-header">
+    <h2>📅 Agenda des Rendez-vous</h2>
+    <button class="btn btn-primary" routerLink="/rendezvous/nouveau">
+      + Nouveau Rendez-vous
+    </button>
+  </header>
+
+  <div *ngIf="rendezvous.length === 0" class="no-rendezvous">
+    <p>Aucun rendez-vous programmé.</p>
+  </div>
+
+  <div *ngIf="rendezvous.length > 0" class="rendezvous-grid">
+    <div *ngFor="let rdv of rendezvous" 
+         class="rendezvous-card" 
+         [class]="getStatutClass(rdv.statut)">
+      <!-- getStatutClass est une fonctuin defini dans le cote logique -->
+
+      <div class="rdv-header">
+        <h3>{{ rdv.date | date:'dd/MM/yyyy' }} à {{ rdv.heure }}</h3>
+        <span class="statut-badge">{{ rdv.statut }}</span>
+      </div>
+
+      <div class="rdv-info">  
+        <div class="info-item">
+          <strong>Patient:</strong> {{ rdv.patientNom }}
+        </div>
+        <div class="info-item">
+          <strong>Médecin:</strong> {{ rdv.medecinNom }}
+        </div>
+        <div class="info-item">
+          <strong>Motif:</strong> {{ rdv.motif }}
+        </div>
+        <div class="info-item">
+          <strong>Durée:</strong> {{ rdv.duree }} minutes
+        </div>
+      </div>
+
+      <div class="rdv-actions">
+        <button *ngIf="rdv.statut === 'planifié'" 
+                class="btn btn-small btn-danger"
+                (click)="annulerRendezVous(rdv.idRDV)">
+          Annuler
+        </button>
+        <button class="btn btn-small btn-secondary">
+          Détails
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
