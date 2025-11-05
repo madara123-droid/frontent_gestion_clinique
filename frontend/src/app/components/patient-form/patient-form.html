@@ -1,0 +1,117 @@
+<div class="patient-form-container">
+  <div class="form-card">
+    <header class="form-header">
+      <h2>👤 Nouveau Patient</h2>
+      <p>Ajoutez un nouveau patient à la base de données</p>
+    </header>
+
+    <form (ngSubmit)="onSubmit()" #patientForm="ngForm" class="patient-form">
+      
+      <!-- Nom et Prénom sur la même ligne -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nom">Nom *</label>
+          <input 
+            type="text" 
+            id="nom"
+            name="nom" 
+            [(ngModel)]="nouveauPatient.nom"
+            required
+            placeholder="Entrez le nom"
+            class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="prenom">Prénom *</label>
+          <input 
+            type="text" 
+            id="prenom"
+            name="prenom" 
+            [(ngModel)]="nouveauPatient.prenom"
+            required
+            placeholder="Entrez le prénom"
+            class="form-control">
+        </div>
+      </div>
+
+      <!-- Date de naissance -->
+      <div class="form-group">
+        <label for="date_naissance">Date de Naissance *</label>
+        <input 
+          type="date" 
+          id="date_naissance"
+          name="date_naissance" 
+          [(ngModel)]="nouveauPatient.date_naissance"
+          required
+          class="form-control">
+      </div>
+
+      <!-- Sexe -->
+      <div class="form-group">
+        <label for="sexe">Sexe *</label>
+        <select 
+          id="sexe"
+          name="sexe" 
+          [(ngModel)]="nouveauPatient.sexe"
+          required
+          class="form-control">
+          <option value="">Sélectionnez le sexe</option>
+          <option value="M">Masculin</option>
+          <option value="F">Féminin</option>
+          <option value="A">Autre</option>
+        </select>
+      </div>
+
+      <!-- Adresse -->
+      <div class="form-group">
+        <label for="adresse">Adresse *</label>
+        <input 
+          type="text" 
+          id="adresse"
+          name="adresse" 
+          [(ngModel)]="nouveauPatient.adresse"
+          required
+          placeholder="Adresse complète"
+          class="form-control">
+      </div>
+
+      <!-- Téléphone -->
+      <div class="form-group">
+        <label for="telephone">Téléphone *</label>
+        <input 
+          type="tel" 
+          id="telephone"
+          name="telephone" 
+          [(ngModel)]="nouveauPatient.telephone"
+          required
+          placeholder="01 23 45 67 89"
+          class="form-control">
+      </div>
+
+      <!-- Email (optionnel) -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email"
+          name="email" 
+          [(ngModel)]="nouveauPatient.email"
+          placeholder="email@exemple.com"
+          class="form-control">
+      </div>
+
+      <!-- Boutons d'action -->
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" (click)="reinitialiser()">
+          🔄 Réinitialiser
+        </button>
+        <button 
+          type="submit" 
+          class="btn btn-primary"
+          [disabled]="!patientForm.form.valid">
+          ✅ Enregistrer le Patient
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
