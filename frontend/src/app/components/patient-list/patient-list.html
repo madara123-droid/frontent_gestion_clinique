@@ -1,6 +1,12 @@
 <div class="patient-list">
-  <h2>📋 Liste des Patients</h2>
-  
+
+<header class="list-header">
+  <h2>👥 Liste des Patients</h2>
+  <button class="btn btn-primary" routerLink="/patients/nouveau">
+    + Nouveau Patient
+  </button>
+</header>  
+
   <!-- Message si aucun patient -->
   <div *ngIf="patients.length === 0" class="no-patients">
     Aucun patient trouvé.

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';    // Contient directives Angula
 import { FormsModule } from '@angular/forms';      // Permet d'utiliser ngModel pour le formulaire
 import { Router } from '@angular/router';          // Pour naviguer entre les pages
 import { RendezvousService } from '../../services/rendezvous'; // Service pour gérer les rendez-vous
-import { Patientservice } from '../../services/patient';        // Service pour gérer les patients
+import { PatientService } from '../../services/Patient.service';        // Service pour gérer les patients
 import { Medecinservice } from '../../services/medecin';       // Service pour gérer les médecins
 import { RendezVous } from '../../models/rendezvous';          // Modèle de données RendezVous
 import { Patient } from '../../models/patient';                // Modèle de données Patient
@@ -38,7 +38,7 @@ export class RendezVousFormComponent implements OnInit {
   // Injection des services et du routeur
   constructor(
     private rendezVousService: RendezvousService,
-    private patientService: Patientservice,
+    private patientService: PatientService,
     private medecinService: Medecinservice,
     private router: Router
   ) {}

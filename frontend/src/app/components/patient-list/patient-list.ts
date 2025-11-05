@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common'; 
 
 // On importe le service Patientservice (qui gère les données des patients)
-import { Patientservice } from '../../services/patient';
+import { PatientService } from '../../services/Patient.service';
 
 // On importe le modèle Patient (la structure d’un patient)
 import { Patient } from '../../models/patient';
@@ -31,7 +31,7 @@ export class PatientListComponent implements OnInit {
   patients: Patient[] = [];
 
   // Le constructeur permet d'injecter le service Patientservice
-  constructor(private patientService: Patientservice) {}
+  constructor(private patientService: PatientService) {}
 
   // ngOnInit() est appelée automatiquement au démarrage du composant
   ngOnInit(): void {

@@ -6,10 +6,12 @@ import { MedecinListComponent } from './components/medecin/medecin-list/medecin-
 import { AccueilComponent } from './components/acceuil/accueil';
 import { RendezVousListComponnent } from './components/rendez-vous-list/rendez-vous-list';
 import { RendezVousFormComponent } from './components/rendez-vous-form/rendez-vous-form';
+import { PatientFormComponent } from './components/patient-form/patient-form';
 export const routes: Routes = [
   
  {path: '', component:AccueilComponent},
-  { path: 'rendezvous/nouveau', component: RendezVousFormComponent }, // ⭐ NOUVEAU
+  { path: 'rendezvous/nouveau', component: RendezVousFormComponent }, 
+  { path: 'patients/nouveau', component: PatientFormComponent },
  {path: 'rendezvous', component: RendezVousListComponnent},
   { path: 'patients', component: PatientListComponent },
   { path: 'medecins', component: MedecinListComponent },
