@@ -1,31 +1,38 @@
-<!-- Conteneur principal de toute l’application -->
 <div class="app-container">
-
-  <!-- ======== En-tête de l'application ======== -->
   <header class="app-header">
-    <!-- Titre global -->
-    <h1>🏥 Gestion Clinique</h1>
+    <div class="header-content">
+      <h1>🏥 Gestion Clinique</h1>
+      <nav class="main-nav">
+        <a routerLink="/patients" 
+           routerLinkActive="active" 
+           [routerLinkActiveOptions]="{ exact: true }">
+          👥 Patients
+        </a>
+        <a routerLink="/medecins" 
+           routerLinkActive="active">
+          👨‍⚕️ Médecins
+        </a>
+        <a routerLink="/rendezvous" 
+           routerLinkActive="active">
+          📅 Rendez-vous
+        </a>
+        <!-- ⭐ NOUVEAU : Lien vers les factures -->
+        <a routerLink="/factures" 
+           routerLinkActive="active">
+          🧾 Factures
+        </a>
+        
 
-    <!-- Barre de navigation -->
-    <nav>
-      <!-- Lien vers la page d'accueil -->
-      <a routerLink="rendezvous" routerLinkActive="active">Accueil</a>
-
-      <a routerLink="/" routerLinkActive="active">Accueil</a>
-
-      <!-- Lien vers la page des patients -->
-      <a routerLink="/patients" routerLinkActive="active">Patients</a>
-
-      <!-- Lien vers la page des médecins -->
-      <a routerLink="/medecins" routerLinkActive="active">Médecins</a>
-    </nav>
+      </nav>
+    </div>
   </header>
 
-  <!-- ======== Contenu principal ======== -->
   <main class="app-main">
-    <!-- ⭐ Le RouterOutlet : c’est ici qu’Angular affiche le contenu des routes -->
-    <!-- Exemple : si tu vas sur /patients → le composant PatientListComponent s’affiche ici -->
     <router-outlet></router-outlet>
   </main>
 
+  <!-- Pied de page optionnel -->
+  <footer class="app-footer">
+    <p>&copy; 2024 Gestion Clinique - Tous droits réservés</p>
+  </footer>
 </div>

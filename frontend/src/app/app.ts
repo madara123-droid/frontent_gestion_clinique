@@ -1,13 +1,22 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { PatientListComponent } from './components/patient-list/patient-list';
 import { MedecinListComponent } from './components/medecin/medecin-list/medecin-list';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],  // ✅ Ajouté PatientListComponent
+  standalone: true, // ❗ Important : c’est un standalone component
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    PatientListComponent,
+    MedecinListComponent
+  ],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css'] // ❗ "styleUrls" (pluriel) et non "styleUrl"
 })
 export class AppComponent {
   title = 'frontend';

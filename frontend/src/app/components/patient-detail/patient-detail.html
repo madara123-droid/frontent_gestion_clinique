@@ -1,0 +1,257 @@
+<div class="patient-detail-container">
+  <!-- En-tête avec navigation -->
+  <header class="detail-header">
+    <div class="header-actions">
+      <button class="btn btn-back" routerLink="/patients">
+        ← Retour à la liste
+      </button>
+      <div class="header-buttons">
+        <button class="btn btn-secondary" (click)="creerRendezVous()">
+          📅 Nouveau RDV
+        </button>
+        <button class="btn btn-primary" (click)="editerPatient()">
+          ✏️ Modifier
+        </button>
+      </div>
+    </div>
+
+    <!-- Chargement -->
+    <div *ngIf="isLoading" class="loading">
+      <p>Chargement des données du patient...</p>
+    </div>
+
+    <!-- Patient non trouvé -->
+    <div *ngIf="!isLoading && !patient" class="patient-not-found">
+      <h2>Patient non trouvé</h2>
+      <p>Le patient que vous recherchez n'existe pas ou a été supprimé.</p>
+      <button class="btn btn-primary" routerLink="/patients">
+        Retour à la liste des patients
+      </button>
+    </div>
+  </header>
+
+  <!-- Contenu du patient -->
+  <div *ngIf="!isLoading && patient" class="patient-content">
+    <!-- En-tête du patient -->
+    <section class="patient-header">
+      <div class="patient-avatar">
+        <div class="avatar">
+          {{ patient.prenom.charAt(0) }}{{ patient.nom.charAt(0) }}
+        </div>
+      </div>
+      <div class="patient-info">
+        <h1>{{ patient.prenom }} {{ patient.nom }}</h1>
+        <div class="patient-meta">
+          <span class="meta-item">
+            <strong>Âge :</strong> {{ calculerAge(patient.date_naissance) }} ans
+          </span>
+          <span class="meta-item">
+            <strong>Sexe :</strong> {{ patient.sexe === 'M' ? 'Masculin' : 'Féminin' }}
+          </span>
+          <span class="meta-item">
+            <strong>Né le :</strong> {{ patient.date_naissance | date:'dd/MM/yyyy' }}
+          </span>
+        </div>
+      </div>
+      <div class="patient-stats">
+        <div class="stat">
+          <div class="stat-number">{{ rendezVous.length }}</div>
+          <div class="stat-label">Rendez-vous</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">{{ factures.length }}</div>
+          <div class="stat-label">Factures</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">{{ getTotalFacturesImpayees() | currency:'EUR' }}</div>
+          <div class="stat-label">Impayés</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation par onglets -->
+    <nav class="tabs-navigation">
+      <button 
+        class="tab-button" 
+        [class.active]="activeTab === 'informations'"
+        (click)="changerOnglet('informations')">
+        📋 Informations
+      </button>
+      <button 
+        class="tab-button" 
+        [class.active]="activeTab === 'rendezvous'"
+        (click)="changerOnglet('rendezvous')">
+        📅 Rendez-vous
+      </button>
+      <button 
+        class="tab-button" 
+        [class.active]="activeTab === 'factures'"
+        (click)="changerOnglet('factures')">
+        🧾 Factures
+      </button>
+      <button 
+        class="tab-button" 
+        [class.active]="activeTab === 'historique'"
+        (click)="changerOnglet('historique')">
+        📊 Historique
+      </button>
+    </nav>
+
+    <!-- Contenu des onglets -->
+    <div class="tab-content">
+      
+      <!-- Onglet Informations -->
+      <div *ngIf="activeTab === 'informations'" class="tab-pane">
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>👤 Informations Personnelles</h3>
+            <div class="info-list">
+              <div class="info-item">
+                <strong>Nom complet :</strong> {{ patient.prenom }} {{ patient.nom }}
+              </div>
+              <div class="info-item">
+                <strong>Date de naissance :</strong> {{ patient.date_naissance | date:'dd/MM/yyyy' }}
+              </div>
+              <div class="info-item">
+                <strong>Âge :</strong> {{ calculerAge(patient.date_naissance) }} ans
+              </div>
+              <div class="info-item">
+                <strong>Sexe :</strong> {{ patient.sexe === 'M' ? 'Masculin' : 'Féminin' }}
+              </div>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h3>📍 Contact</h3>
+            <div class="info-list">
+              <div class="info-item">
+                <strong>Adresse :</strong> {{ patient.adresse }}
+              </div>
+              <div class="info-item">
+                <strong>Téléphone :</strong> {{ patient.telephone }}
+              </div>
+              <div class="info-item" *ngIf="patient.email">
+                <strong>Email :</strong> {{ patient.email }}
+              </div>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h3>📊 Dernières Activités</h3>
+            <div class="info-list">
+              <div class="info-item" *ngIf="getDernierRendezVous()">
+                <strong>Dernier rendez-vous :</strong> 
+                {{ getDernierRendezVous()!.date | date:'dd/MM/yyyy' }} 
+                avec {{ getDernierRendezVous()!.medecinNom }}
+              </div>
+              <div class="info-item" *ngIf="getProchainRendezVous()">
+                <strong>Prochain rendez-vous :</strong> 
+                {{ getProchainRendezVous()!.date | date:'dd/MM/yyyy' }} 
+                à {{ getProchainRendezVous()!.heure }}
+              </div>
+              <div class="info-item">
+                <strong>Total factures impayées :</strong> 
+                {{ getTotalFacturesImpayees() | currency:'EUR' }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Onglet Rendez-vous -->
+      <div *ngIf="activeTab === 'rendezvous'" class="tab-pane">
+        <div class="section-header">
+          <h3>📅 Historique des Rendez-vous</h3>
+          <button class="btn btn-primary" (click)="creerRendezVous()">
+            + Nouveau Rendez-vous
+          </button>
+        </div>
+
+        <div *ngIf="rendezVous.length === 0" class="empty-state">
+          <p>Aucun rendez-vous trouvé pour ce patient.</p>
+          <button class="btn btn-primary" (click)="creerRendezVous()">
+            Planifier le premier rendez-vous
+          </button>
+        </div>
+
+        <div *ngIf="rendezVous.length > 0" class="rendezvous-list">
+          <div *ngFor="let rdv of rendezVous" class="rendezvous-item">
+            <div class="rdv-date">
+              <div class="date">{{ rdv.date | date:'dd/MM' }}</div>
+              <div class="time">{{ rdv.heure }}</div>
+            </div>
+            <div class="rdv-info">
+              <h4>{{ rdv.motif }}</h4>
+              <p>Avec {{ rdv.medecinNom }}</p>
+              <span class="statut-badge" [class]="'statut-' + rdv.statut">
+                {{ rdv.statut }}
+              </span>
+            </div>
+            <div class="rdv-actions">
+              <button class="btn btn-small btn-outline">
+                Détails
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Onglet Factures -->
+      <div *ngIf="activeTab === 'factures'" class="tab-pane">
+        <div class="section-header">
+          <h3>🧾 Factures du Patient</h3>
+        </div>
+
+        <div *ngIf="factures.length === 0" class="empty-state">
+          <p>Aucune facture trouvée pour ce patient.</p>
+        </div>
+
+        <div *ngIf="factures.length > 0" class="factures-list">
+          <div *ngFor="let facture of factures" class="facture-item">
+            <div class="facture-header">
+              <h4>Facture #{{ facture.idFacture }}</h4>
+              <span class="montant">{{ facture.montant | currency:'EUR' }}</span>
+            </div>
+            <div class="facture-details">
+              <p><strong>Date :</strong> {{ facture.dateCreation | date:'dd/MM/yyyy' }}</p>
+              <p><strong>Échéance :</strong> {{ facture.dateEcheance | date:'dd/MM/yyyy' }}</p>
+              <p><strong>Statut :</strong> 
+                <span class="statut-badge" [class]="'statut-' + facture.statut">
+                  {{ facture.statut }}
+                </span>
+              </p>
+              <p><strong>Consultations :</strong> {{ facture.consultations.join(', ') }}</p>
+            </div>
+            <div class="facture-actions">
+              <button class="btn btn-small btn-outline">
+                Détails
+              </button>
+              <button *ngIf="facture.statut === 'en attente'" class="btn btn-small btn-success">
+                Payer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Onglet Historique -->
+      <div *ngIf="activeTab === 'historique'" class="tab-pane">
+        <div class="section-header">
+          <h3>📊 Historique Médical</h3>
+        </div>
+        
+        <div class="empty-state">
+          <p>L'historique médical complet sera disponible prochainement.</p>
+          <p>Cette section inclura :</p>
+          <ul>
+            <li>✅ Antécédents médicaux</li>
+            <li>✅ Ordonnances passées</li>
+            <li>✅ Résultats d'examens</li>
+            <li>✅ Hospitalisations</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

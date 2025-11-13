@@ -7,8 +7,10 @@ import { AccueilComponent } from './components/acceuil/accueil';
 import { RendezVousListComponnent } from './components/rendez-vous-list/rendez-vous-list';
 import { RendezVousFormComponent } from './components/rendez-vous-form/rendez-vous-form';
 import { PatientFormComponent } from './components/patient-form/patient-form';
+import { FactureListComponent } from './components/facture-list/facture-list';
 export const routes: Routes = [
   
+  {path: 'factures', component: FactureListComponent},
  {path: '', component:AccueilComponent},
   { path: 'rendezvous/nouveau', component: RendezVousFormComponent }, 
   { path: 'patients/nouveau', component: PatientFormComponent },

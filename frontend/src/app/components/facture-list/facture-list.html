@@ -1,0 +1,130 @@
+<div class="facture-list-container">
+  <!-- En-tête avec statistiques -->
+  <header class="facture-header">
+    <div class="header-main">
+      <h1>🧾 Gestion des Factures</h1>
+      <button class="btn btn-primary" routerLink="/factures/nouvelle">
+        + Nouvelle Facture
+      </button>
+    </div>
+
+    <!-- Cartes de statistiques -->
+    <div class="stats-cards">
+      <div class="stat-card total">
+        <div class="stat-icon">💰</div>
+        <div class="stat-info">
+          <h3>{{ getTotalFactures() | currency:'EUR' }}</h3>
+          <p>Chiffre d'affaires total</p>
+        </div>
+      </div>
+
+      <div class="stat-card en-attente">
+        <div class="stat-icon">⏳</div>
+        <div class="stat-info">
+          <h3>{{ totalEnAttente | currency:'EUR' }}</h3>
+          <p>En attente de paiement</p>
+        </div>
+      </div>
+
+      <div class="stat-card payee">
+        <div class="stat-icon">✅</div>
+        <div class="stat-info">
+          <h3>{{ totalPaye | currency:'EUR' }}</h3>
+          <p>Factures payées</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Filtres -->
+  <section class="filters-section">
+    <div class="filters">
+      <label>Filtrer par statut :</label>
+      <select [(ngModel)]="filtreStatut" (change)="chargerFactures()" class="filter-select">
+        <option value="tous">Toutes les factures</option>
+        <option value="en attente">En attente</option>
+        <option value="payée">Payées</option>
+        <option value="en retard">En retard</option>
+        <option value="annulée">Annulées</option>
+      </select>
+    </div>
+
+    <div class="results-count">
+      {{ getFacturesFiltrees().length }} facture(s) trouvée(s)
+    </div>
+  </section>
+
+  <!-- Liste des factures -->
+  <section class="factures-section">
+    <div *ngIf="getFacturesFiltrees().length === 0" class="no-factures">
+      <div class="empty-state">
+        <div class="empty-icon">📄</div>
+        <h3>Aucune facture trouvée</h3>
+        <p>Créez votre première facture pour commencer</p>
+        <button class="btn btn-primary" routerLink="/factures/nouvelle">
+          Créer une facture 
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="getFacturesFiltrees().length > 0" class="factures-grid">
+      <div *ngFor="let facture of getFacturesFiltrees()" 
+           class="facture-card"
+           [class]="getStatutClass(facture.statut)">
+
+        <!-- En-tête de la facture -->
+        <div class="facture-header">
+          <div class="facture-info">
+            <h3>Facture #{{ facture.idFacture }}</h3>
+            <span class="patient-name">{{ facture.patientNom }}</span>
+          </div>
+          <div class="facture-montant">
+            <span class="montant">{{ facture.montant | currency:'EUR' }}</span>
+            <span class="statut-badge">{{ facture.statut }}</span>
+          </div>
+        </div>
+
+        <!-- Détails de la facture -->
+        <div class="facture-details">
+          <div class="detail-row">
+            <span class="label">Date de création :</span>
+            <span class="value">{{ facture.dateCreation | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="detail-row">
+          </div>
+          <div class="detail-row">
+            <span class="label">Consultations :</span>
+            <span class="value">{{ facture.consultations.join(', ') }}</span>
+          </div>
+          <div *ngIf="facture.medicaments && facture.medicaments.length > 0" class="detail-row">
+            <span class="label">Médicaments :</span>
+            <span class="value">{{ facture.medicaments.join(', ') }}</span>
+          </div>
+          <div *ngIf="facture.note" class="detail-row">
+            <span class="label">Notes :</span>
+            <span class="value notes">{{ facture.note }}</span>
+          </div>
+        </div>
+        <!-- petitie subtilise avrc *ngIf , ci dessus , affifche les medicamet et les notes , s'il existe -->
+
+        <!-- Actions -->
+        <div class="facture-actions">
+          <button class="btn btn-small btn-outline">
+            📋 Détails
+          </button>
+          <button *ngIf="facture.statut === 'en attente'" 
+                  class="btn btn-small btn-success"
+                  (click)="marquerCommePayee(facture.idFacture)">
+            ✅ Marquer comme payée
+          </button>
+          <button class="btn btn-small btn-secondary">
+            📧 Envoyer
+          </button>
+          <button class="btn btn-small btn-danger">
+            🗑️ Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
