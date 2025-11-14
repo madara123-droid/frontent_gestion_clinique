@@ -281,7 +281,7 @@
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
 }
 
 .btn-small {

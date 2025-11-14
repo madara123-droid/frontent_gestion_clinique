@@ -21,7 +21,7 @@ import { Facture } from '../../models/facture'
   templateUrl: './patient-detail.html',
   styleUrl: './patient-detail.css',
 })
-export class PatientDetail implements OnInit  {
+export class PatientDetailComponent implements OnInit  {
   patient: Patient | undefined;
   rendezVous: RendezVous[] = [];
   factures: Facture[] = [];
@@ -55,7 +55,7 @@ chargerDonneesPatient(): void {
 
   if (patientId) {
     // a partir de l'id recuperer je vais charger tout les info concernat le patient
-    this.patient = this.patientService.getidpatient(patientId);
+    this.patient = this.patientService.getidPatient(patientId);
     this.rendezVous = this.rendezvousService.getrendezvous_patient(patientId);
     this.factures = this.factureService.getFactureParPatient(patientId);
   }
@@ -65,7 +65,7 @@ chargerDonneesPatient(): void {
 changerOnglet(onglet: string): void{
   this.activeTab = onglet;
 }
-calculerAge(dateNaissance: string): number{
+calculerAge(dateNaissance: Date): number{
   const naissance = new Date (dateNaissance);
   const today = new Date();
   let age = today.getFullYear() - naissance.getFullYear();
@@ -80,6 +80,8 @@ calculerAge(dateNaissance: string): number{
 }
 
 getDernierRendezVous(): RendezVous | undefined {
+  
+  if(this.rendezVous.length ===0) return undefined;
 
   return this.rendezVous.filter(rdv=> new Date(rdv.date)>= new Date() && rdv.statut ==='planifié').sort((a,b)=> new Date(a.date).getTime() - new Date (b.date).getTime())[0];
   // filter permet de filtrer les rendez vous pour ne garder que ceux dont la date est superieur ou egale a la date actuelle et dont le statut est planifié
@@ -87,7 +89,24 @@ getDernierRendezVous(): RendezVous | undefined {
   // [0] permet de retourner le premier element du tableau trié, qui correspond au prochain rendez vous
    
 }
+getProchainRendezvous(): RendezVous | undefined {
+  if (this.rendezVous.length === 0) return undefined;
+
+  const prochains = this.rendezVous
+      .filter(rdv => new Date(rdv.date) >= new Date() && rdv.statut === 'planifié')
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    
+    return prochains.length > 0 ? prochains[0] : undefined;
+    // la ligne ci dessus veut dire que si le tableai ligne contient un rendez vous , il retourne le premier rendezVous ou affiche indfined
 //apres essaye de comprendre les lignes ci-dessous 
+}
+
+getTotalFacturesImpayees(): number {
+  if (this.factures.length === 0) return 0;
+  return this.factures.filter(f=> f.statut ==='en attente' || f.statut === 'en retard').reduce((total, facture) => total + facture.montant, 0);
+}
+
+
   editerPatient(): void {
     if (this.patient) {
       this.router.navigate(['/patients/editer', this.patient.idpatient]);
@@ -101,4 +120,5 @@ getDernierRendezVous(): RendezVous | undefined {
       });
     }
   }
+
 }

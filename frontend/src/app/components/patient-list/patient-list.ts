@@ -11,14 +11,14 @@ import { PatientService } from '../../services/Patient.service';
 
 // On importe le modèle Patient (la structure d’un patient)
 import { Patient } from '../../models/patient';
-
+import { RouterModule } from '@angular/router';
 // ===============================
 //  DÉFINITION DU COMPOSANT
 // ===============================
 @Component({
   selector: 'app-patient-list',        // Nom de la balise HTML du composant
   standalone: true,                    // ✅ Indique que ce composant est autonome
-  imports: [CommonModule, DatePipe],   // ✅ Permet d'utiliser *ngIf, *ngFor et |date dans le HTML
+  imports: [CommonModule, DatePipe,RouterModule],   // ✅ Permet d'utiliser *ngIf, *ngFor et |date dans le HTML
   templateUrl: './patient-list.html',  // Lien vers le fichier HTML du composant (vue)
   styleUrls: ['./patient-list.css']    // ✅ attention : c’est "styleUrls" avec un "s"
 })

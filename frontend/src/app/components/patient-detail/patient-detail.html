@@ -144,10 +144,10 @@
                 {{ getDernierRendezVous()!.date | date:'dd/MM/yyyy' }} 
                 avec {{ getDernierRendezVous()!.medecinNom }}
               </div>
-              <div class="info-item" *ngIf="getProchainRendezVous()">
+              <div class="info-item" *ngIf="getProchainRendezvous()">
                 <strong>Prochain rendez-vous :</strong> 
-                {{ getProchainRendezVous()!.date | date:'dd/MM/yyyy' }} 
-                à {{ getProchainRendezVous()!.heure }}
+                {{ getProchainRendezvous()!.date | date:'dd/MM/yyyy' }} 
+                à {{ getProchainRendezvous()!.heure }}
               </div>
               <div class="info-item">
                 <strong>Total factures impayées :</strong> 
@@ -214,7 +214,6 @@
             </div>
             <div class="facture-details">
               <p><strong>Date :</strong> {{ facture.dateCreation | date:'dd/MM/yyyy' }}</p>
-              <p><strong>Échéance :</strong> {{ facture.dateEcheance | date:'dd/MM/yyyy' }}</p>
               <p><strong>Statut :</strong> 
                 <span class="statut-badge" [class]="'statut-' + facture.statut">
                   {{ facture.statut }}

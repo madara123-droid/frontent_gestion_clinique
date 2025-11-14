@@ -1,0 +1,412 @@
+/* ===== VARIABLES GLOBALES ===== */
+.app-container {
+  --primary-color: #3498db;
+  --primary-dark: #2980b9;
+  --secondary-color: #2c3e50;
+  --accent-color: #e74c3c;
+  --success-color: #27ae60;
+  --warning-color: #f39c12;
+  --info-color: #17a2b8;
+  --light-color: #ecf0f1;
+  --dark-color: #34495e;
+  --border-color: #bdc3c7;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.15);
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-header: linear-gradient(135deg, #3498db, #2c3e50);
+  --gradient-nav: linear-gradient(135deg, #2980b9, #34495e);
+  
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--light-color);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== HEADER PRINCIPAL ===== */
+.app-header {
+  background: var(--gradient-header);
+  color: white;
+  padding: 0;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.header-content::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--success-color), var(--primary-color), var(--accent-color));
+  opacity: 0.8;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 2.2em;
+  font-weight: 300;
+  padding: 20px 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.app-header h1::before {
+  content: '🏥';
+  font-size: 1.2em;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+/* ===== NAVIGATION PRINCIPALE ===== */
+.main-nav {
+  display: flex;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 8px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.main-nav a {
+  padding: 14px 24px;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  border-radius: 12px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  font-size: 1em;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-nav a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.main-nav a:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  color: white;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.main-nav a:hover::before {
+  left: 100%;
+}
+
+.main-nav a.active {
+  background: var(--gradient-nav);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transform: translateY(-2px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.main-nav a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background: var(--success-color);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--success-color);
+}
+
+/* Effet d'icône au survol */
+.main-nav a:hover::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: all 0.4s ease;
+  transform: translate(-50%, -50%);
+}
+
+.main-nav a:hover::after {
+  width: 60px;
+  height: 60px;
+}
+
+/* ===== CONTENU PRINCIPAL ===== */
+.app-main {
+  flex: 1;
+  padding: 0;
+  background: var(--light-color);
+  position: relative;
+}
+
+.app-main::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(52, 152, 219, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(46, 204, 113, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(155, 89, 182, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* ===== PIED DE PAGE ===== */
+.app-footer {
+  background: var(--secondary-color);
+  color: white;
+  text-align: center;
+  padding: 25px 20px;
+  margin-top: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.app-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color), var(--accent-color));
+}
+
+.app-footer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(52, 152, 219, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 90% 80%, rgba(46, 204, 113, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.app-footer p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 0.95em;
+  font-weight: 300;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes slideInDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.app-header {
+  animation: slideInDown 0.6s ease;
+}
+
+.app-footer {
+  animation: fadeInUp 0.6s ease 0.2s both;
+}
+
+/* Animation des liens de navigation */
+.main-nav a {
+  animation: fadeInUp 0.6s ease both;
+}
+
+.main-nav a:nth-child(1) { animation-delay: 0.3s; }
+.main-nav a:nth-child(2) { animation-delay: 0.4s; }
+.main-nav a:nth-child(3) { animation-delay: 0.5s; }
+.main-nav a:nth-child(4) { animation-delay: 0.6s; }
+
+/* ===== EFFETS DE SURVOL AVANCÉS ===== */
+.main-nav a {
+  position: relative;
+  overflow: hidden;
+}
+
+.main-nav a .nav-icon {
+  transition: transform 0.3s ease;
+}
+
+.main-nav a:hover .nav-icon {
+  transform: scale(1.2) rotate(10deg);
+}
+
+/* Effet de vague au survol */
+.main-nav a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.main-nav a:hover::before {
+  left: 100%;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 20px;
+  }
+  
+  .app-header h1 {
+    font-size: 1.8em;
+    padding: 10px 0;
+    justify-content: center;
+  }
+  
+  .main-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: 8px;
+  }
+  
+  .main-nav a {
+    padding: 12px 18px;
+    font-size: 0.9em;
+    flex: 1;
+    min-width: 120px;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .app-footer {
+    padding: 20px 15px;
+  }
+  
+  .app-footer p {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header h1 {
+    font-size: 1.5em;
+    gap: 10px;
+  }
+  
+  .main-nav {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .main-nav a {
+    padding: 15px 20px;
+    font-size: 0.95em;
+  }
+  
+  .header-content {
+    padding: 10px 15px;
+  }
+}
+
+/* ===== AMÉLIORATIONS VISUELLES ===== */
+/* Effet de brillance sur le header */
+.app-header {
+  position: relative;
+}
+
+.app-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Ombre portée dynamique */
+.main-nav a {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.main-nav a:hover {
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+.main-nav a.active {
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+}
+
+/* Transition pour tous les éléments interactifs */
+.main-nav a, .app-header h1 {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Effet de focus pour l'accessibilité */
+.main-nav a:focus {
+  outline: 2px solid var(--success-color);
+  outline-offset: 2px;
+}
+
+/* Amélioration du contraste */
+@media (prefers-reduced-motion: reduce) {
+  .main-nav a, .app-header, .app-footer {
+    animation: none;
+    transition: none;
+  }
+}

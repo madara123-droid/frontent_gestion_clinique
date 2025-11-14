@@ -1,159 +1,476 @@
-/* Conteneur principal de la page d'accueil */
+/* ===== VARIABLES ET RESET ===== */
 .accueil-container {
-  max-width: 1200px;    /* largeur maximale du contenu */
-  margin: 0 auto;       /* centre le conteneur horizontalement */
-  padding: 20px;        /* espace intérieur autour du contenu */
+  --primary-color: #3498db;
+  --primary-dark: #2980b9;
+  --secondary-color: #2c3e50;
+  --accent-color: #e74c3c;
+  --success-color: #27ae60;
+  --warning-color: #f39c12;
+  --info-color: #17a2b8;
+  --light-color: #ecf0f1;
+  --dark-color: #34495e;
+  --border-color: #bdc3c7;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.15);
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-card: linear-gradient(135deg, #3498db, #2980b9);
+  
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: var(--gradient-primary);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* En-tête de la page */
+/* ===== EN-TÊTE ===== */
 .accueil-header {
-  text-align: center;   /* centre le texte horizontalement */
-  margin-bottom: 40px;  /* espace en bas de l'en-tête */
+  text-align: center;
+  margin-bottom: 50px;
+  background: white;
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.accueil-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color), var(--accent-color));
 }
 
 .accueil-header h1 {
-  color: #2c3e50;       /* couleur du texte principal */
-  margin-bottom: 10px;  /* espace en dessous du titre */
+  color: var(--secondary-color);
+  margin-bottom: 15px;
+  font-size: 3em;
+  font-weight: 300;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Sous-titre de l'en-tête */
 .sous-titre {
-  color: #7f8c8d;       /* couleur grise pour sous-titre */
-  font-size: 1.2em;     /* taille du texte légèrement plus grande que normal */
+  color: var(--dark-color);
+  font-size: 1.3em;
+  font-weight: 300;
+  opacity: 0.8;
 }
 
-/* ===================== Section Statistiques ===================== */
+/* ===== SECTION STATISTIQUES ===== */
 .stats-section {
-  margin-bottom: 40px;  /* espace sous la section statistiques */
+  margin-bottom: 50px;
 }
 
 .stats-section h2 {
-  color: #34495e;       /* couleur du titre */
-  margin-bottom: 20px;  /* espace sous le titre */
+  color: white;
+  margin-bottom: 30px;
+  font-size: 2em;
+  font-weight: 300;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-/* Grille des cartes statistiques */
 .stats-grid {
-  display: grid;                                /* utilise CSS Grid */
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-  /* crée autant de colonnes que possible, chaque colonne minimum 250px et flexible */
-  gap: 20px;                                    /* espace entre les cartes */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
 }
 
-/* Carte individuelle */
 .stat-card {
-  background: white;                             /* fond blanc */
-  padding: 20px;                                 /* espace intérieur */
-  border-radius: 10px;                           /* coins arrondis */
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);       /* ombre légère pour effet profondeur */
-  display: flex;                                 /* flexbox pour aligner icône et texte */
-  align-items: center;                           /* centre verticalement les éléments */
-  gap: 15px;                                     /* espace entre icône et texte */
+  background: white;
+  padding: 30px 25px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-left: 5px solid transparent;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Icône dans la carte */
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-hover);
+}
+
+.stat-card:hover::before {
+  opacity: 1;
+}
+
+/* Couleurs des cartes statistiques */
+.stat-card:nth-child(1) {
+  border-left-color: var(--primary-color);
+}
+
+.stat-card:nth-child(2) {
+  border-left-color: var(--success-color);
+}
+
+.stat-card:nth-child(3) {
+  border-left-color: var(--warning-color);
+}
+
 .stat-icon {
-  font-size: 2em;       /* taille de l’icône */
+  font-size: 3em;
+  opacity: 0.9;
+  transition: transform 0.3s ease;
 }
 
-/* Informations dans la carte */
+.stat-card:hover .stat-icon {
+  transform: scale(1.1);
+}
+
 .stat-info h3 {
-  font-size: 2em;       /* taille du chiffre/statistique */
-  color: #3498db;       /* couleur bleue */
-  margin: 0;             /* aucun espace autour */
+  font-size: 2.5em;
+  color: var(--secondary-color);
+  margin: 0;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .stat-info p {
-  color: #7f8c8d;       /* couleur grise */
-  margin: 0;             /* aucun espace autour */
+  color: var(--dark-color);
+  margin: 5px 0 0 0;
+  font-size: 1em;
+  font-weight: 500;
+  opacity: 0.8;
 }
 
-/* ===================== Navigation ===================== */
+/* ===== SECTION NAVIGATION ===== */
 .navigation-section {
-  margin-bottom: 40px;  /* espace sous la section navigation */
+  margin-bottom: 50px;
 }
 
 .navigation-section h2 {
-  color: #34495e;       /* couleur du titre de section */
-  margin-bottom: 20px;  /* espace sous le titre */
+  color: white;
+  margin-bottom: 30px;
+  font-size: 2em;
+  font-weight: 300;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .nav-grid {
-  display: grid;                                /* grille pour les cartes de navigation */
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;                                    /* espace entre les cartes */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
 }
 
-/* Carte de navigation */
 .nav-card {
-  background: white;                             /* fond blanc */
-  padding: 25px;                                 /* espace intérieur */
-  border-radius: 10px;                           /* coins arrondis */
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);       /* ombre légère */
-  text-decoration: none;                         /* supprime soulignement lien */
-  color: inherit;                                /* hérite de la couleur parent */
-  transition: transform 0.3s ease;               /* transition pour effet hover */
-  display: block;                                /* affiche en bloc pour lien entier cliquable */
+  background: white;
+  padding: 35px 30px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+}
+
+.nav-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
+  transition: left 0.6s ease;
 }
 
 .nav-card:hover {
-  transform: translateY(-5px);                  /* effet de léger déplacement vers le haut au survol */
-  text-decoration: none;                        /* toujours pas de soulignement */
-  color: inherit;                               /* conserve couleur du texte */
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--primary-color);
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-card:hover::before {
+  left: 100%;
 }
 
 .nav-icon {
-  font-size: 2.5em;       /* taille icône navigation */
-  margin-bottom: 15px;    /* espace sous l’icône */
+  font-size: 3.5em;
+  margin-bottom: 20px;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.nav-card:hover .nav-icon {
+  transform: scale(1.1) rotate(5deg);
 }
 
 .nav-card h3 {
-  color: #2c3e50;         /* couleur titre de la carte */
-  margin-bottom: 10px;    /* espace sous le titre */
+  color: var(--secondary-color);
+  margin-bottom: 15px;
+  font-size: 1.5em;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.nav-card:hover h3 {
+  color: var(--primary-color);
 }
 
 .nav-card p {
-  color: #7f8c8d;         /* couleur texte descriptif */
-  margin: 0;               /* aucun espace autour */
+  color: var(--dark-color);
+  margin: 0;
+  font-size: 1em;
+  line-height: 1.6;
+  opacity: 0.8;
 }
 
-/* ===================== Actions ===================== */
+/* ===== SECTION ACTIONS ===== */
+.actions-section {
+  margin-bottom: 40px;
+}
+
 .actions-section h2 {
-  color: #34495e;         /* couleur du titre */
-  margin-bottom: 20px;    /* espace sous le titre */
+  color: white;
+  margin-bottom: 30px;
+  font-size: 2em;
+  font-weight: 300;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .actions-buttons {
-  display: flex;           /* aligne les boutons horizontalement */
-  gap: 15px;               /* espace entre les boutons */
-  flex-wrap: wrap;         /* passe à la ligne si espace insuffisant */
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
+/* ===== BOUTONS ===== */
 .btn {
-  padding: 12px 24px;      /* espace intérieur du bouton */
-  border: none;             /* pas de bordure */
-  border-radius: 5px;       /* coins arrondis */
-  font-size: 1em;           /* taille du texte */
-  cursor: pointer;          /* pointeur main au survol */
-  text-decoration: none;    /* pas de soulignement */
-  display: inline-block;    /* comportement bloc en ligne */
-  transition: background-color 0.3s ease; /* animation couleur */
+  padding: 16px 32px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transition: all 0.4s ease;
+  transform: translate(-50%, -50%);
+}
+
+.btn:hover::before {
+  width: 300px;
+  height: 300px;
 }
 
 .btn-primary {
-  background-color: #3498db;  /* couleur principale bleu */
-  color: white;                /* texte blanc */
+  background: var(--gradient-card);
+  color: white;
+  box-shadow: var(--shadow);
 }
 
 .btn-primary:hover {
-  background-color: #2980b9;  /* couleur bleu plus foncé au survol */
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: var(--shadow-hover);
+  color: white;
 }
 
 .btn-secondary {
-  background-color: #95a5a6;  /* gris clair */
-  color: white;                /* texte blanc */
+  background: var(--secondary-color);
+  color: white;
+  box-shadow: var(--shadow);
 }
 
 .btn-secondary:hover {
-  background-color: #7f8c8d;  /* gris plus foncé au survol */
+  background: var(--dark-color);
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: var(--shadow-hover);
+  color: white;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.accueil-header {
+  animation: fadeInUp 0.8s ease;
+}
+
+.stats-grid {
+  animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+.nav-grid {
+  animation: fadeInUp 0.8s ease 0.4s both;
+}
+
+.actions-section {
+  animation: fadeInUp 0.8s ease 0.6s both;
+}
+
+/* Effet de pulsation sur les cartes au survol */
+.stat-card:hover, .nav-card:hover {
+  animation: pulse 2s infinite;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .accueil-container {
+    padding: 15px;
+  }
+  
+  .accueil-header {
+    padding: 30px 20px;
+    margin-bottom: 30px;
+  }
+  
+  .accueil-header h1 {
+    font-size: 2.2em;
+  }
+  
+  .sous-titre {
+    font-size: 1.1em;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .nav-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .stat-card, .nav-card {
+    padding: 25px 20px;
+  }
+  
+  .stat-icon {
+    font-size: 2.5em;
+  }
+  
+  .nav-icon {
+    font-size: 3em;
+  }
+  
+  .stat-info h3 {
+    font-size: 2em;
+  }
+  
+  .actions-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .accueil-header h1 {
+    font-size: 1.8em;
+  }
+  
+  .stats-section h2,
+  .navigation-section h2,
+  .actions-section h2 {
+    font-size: 1.6em;
+  }
+  
+  .stat-card, .nav-card {
+    padding: 20px 15px;
+  }
+  
+  .stat-info h3 {
+    font-size: 1.8em;
+  }
+}
+
+/* ===== EFFETS SPÉCIAUX ===== */
+/* Lueur au survol */
+.nav-card:hover, .stat-card:hover {
+  filter: drop-shadow(0 10px 20px rgba(52, 152, 219, 0.3));
+}
+
+/* Transition pour tous les éléments interactifs */
+.stat-card, .nav-card, .btn {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Amélioration de la lisibilité */
+.stat-card, .nav-card {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Gradient text pour les titres de section */
+.stats-section h2,
+.navigation-section h2,
+.actions-section h2 {
+  background: linear-gradient(135deg, #ffffff, #e8f4f8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

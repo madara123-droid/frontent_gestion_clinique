@@ -1,257 +1,594 @@
-<div class="patient-detail-container">
-  <!-- En-tête avec navigation -->
-  <header class="detail-header">
-    <div class="header-actions">
-      <button class="btn btn-back" routerLink="/patients">
-        ← Retour à la liste
-      </button>
-      <div class="header-buttons">
-        <button class="btn btn-secondary" (click)="creerRendezVous()">
-          📅 Nouveau RDV
-        </button>
-        <button class="btn btn-primary" (click)="editerPatient()">
-          ✏️ Modifier
-        </button>
-      </div>
-    </div>
+/* ===== VARIABLES ET RESET ===== */
+.patient-detail-container {
+  --primary-color: #3498db;
+  --primary-dark: #2980b9;
+  --secondary-color: #2c3e50;
+  --accent-color: #e74c3c;
+  --success-color: #27ae60;
+  --warning-color: #f39c12;
+  --info-color: #17a2b8;
+  --light-color: #ecf0f1;
+  --dark-color: #34495e;
+  --border-color: #bdc3c7;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.15);
+  
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    <!-- Chargement -->
-    <div *ngIf="isLoading" class="loading">
-      <p>Chargement des données du patient...</p>
-    </div>
+/* ===== EN-TÊTE ===== */
+.detail-header {
+  margin-bottom: 30px;
+}
 
-    <!-- Patient non trouvé -->
-    <div *ngIf="!isLoading && !patient" class="patient-not-found">
-      <h2>Patient non trouvé</h2>
-      <p>Le patient que vous recherchez n'existe pas ou a été supprimé.</p>
-      <button class="btn btn-primary" routerLink="/patients">
-        Retour à la liste des patients
-      </button>
-    </div>
-  </header>
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+}
 
-  <!-- Contenu du patient -->
-  <div *ngIf="!isLoading && patient" class="patient-content">
-    <!-- En-tête du patient -->
-    <section class="patient-header">
-      <div class="patient-avatar">
-        <div class="avatar">
-          {{ patient.prenom.charAt(0) }}{{ patient.nom.charAt(0) }}
-        </div>
-      </div>
-      <div class="patient-info">
-        <h1>{{ patient.prenom }} {{ patient.nom }}</h1>
-        <div class="patient-meta">
-          <span class="meta-item">
-            <strong>Âge :</strong> {{ calculerAge(patient.date_naissance) }} ans
-          </span>
-          <span class="meta-item">
-            <strong>Sexe :</strong> {{ patient.sexe === 'M' ? 'Masculin' : 'Féminin' }}
-          </span>
-          <span class="meta-item">
-            <strong>Né le :</strong> {{ patient.date_naissance | date:'dd/MM/yyyy' }}
-          </span>
-        </div>
-      </div>
-      <div class="patient-stats">
-        <div class="stat">
-          <div class="stat-number">{{ rendezVous.length }}</div>
-          <div class="stat-label">Rendez-vous</div>
-        </div>
-        <div class="stat">
-          <div class="stat-number">{{ factures.length }}</div>
-          <div class="stat-label">Factures</div>
-        </div>
-        <div class="stat">
-          <div class="stat-number">{{ getTotalFacturesImpayees() | currency:'EUR' }}</div>
-          <div class="stat-label">Impayés</div>
-        </div>
-      </div>
-    </section>
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
 
-    <!-- Navigation par onglets -->
-    <nav class="tabs-navigation">
-      <button 
-        class="tab-button" 
-        [class.active]="activeTab === 'informations'"
-        (click)="changerOnglet('informations')">
-        📋 Informations
-      </button>
-      <button 
-        class="tab-button" 
-        [class.active]="activeTab === 'rendezvous'"
-        (click)="changerOnglet('rendezvous')">
-        📅 Rendez-vous
-      </button>
-      <button 
-        class="tab-button" 
-        [class.active]="activeTab === 'factures'"
-        (click)="changerOnglet('factures')">
-        🧾 Factures
-      </button>
-      <button 
-        class="tab-button" 
-        [class.active]="activeTab === 'historique'"
-        (click)="changerOnglet('historique')">
-        📊 Historique
-      </button>
-    </nav>
+.btn-back {
+  background: var(--light-color);
+  color: var(--dark-color);
+  border: 2px solid var(--border-color);
+}
 
-    <!-- Contenu des onglets -->
-    <div class="tab-content">
-      
-      <!-- Onglet Informations -->
-      <div *ngIf="activeTab === 'informations'" class="tab-pane">
-        <div class="info-grid">
-          <div class="info-card">
-            <h3>👤 Informations Personnelles</h3>
-            <div class="info-list">
-              <div class="info-item">
-                <strong>Nom complet :</strong> {{ patient.prenom }} {{ patient.nom }}
-              </div>
-              <div class="info-item">
-                <strong>Date de naissance :</strong> {{ patient.date_naissance | date:'dd/MM/yyyy' }}
-              </div>
-              <div class="info-item">
-                <strong>Âge :</strong> {{ calculerAge(patient.date_naissance) }} ans
-              </div>
-              <div class="info-item">
-                <strong>Sexe :</strong> {{ patient.sexe === 'M' ? 'Masculin' : 'Féminin' }}
-              </div>
-            </div>
-          </div>
+.btn-back:hover {
+  background: var(--border-color);
+  transform: translateX(-3px);
+}
 
-          <div class="info-card">
-            <h3>📍 Contact</h3>
-            <div class="info-list">
-              <div class="info-item">
-                <strong>Adresse :</strong> {{ patient.adresse }}
-              </div>
-              <div class="info-item">
-                <strong>Téléphone :</strong> {{ patient.telephone }}
-              </div>
-              <div class="info-item" *ngIf="patient.email">
-                <strong>Email :</strong> {{ patient.email }}
-              </div>
-            </div>
-          </div>
+.header-buttons {
+  display: flex;
+  gap: 12px;
+}
 
-          <div class="info-card">
-            <h3>📊 Dernières Activités</h3>
-            <div class="info-list">
-              <div class="info-item" *ngIf="getDernierRendezVous()">
-                <strong>Dernier rendez-vous :</strong> 
-                {{ getDernierRendezVous()!.date | date:'dd/MM/yyyy' }} 
-                avec {{ getDernierRendezVous()!.medecinNom }}
-              </div>
-              <div class="info-item" *ngIf="getProchainRendezVous()">
-                <strong>Prochain rendez-vous :</strong> 
-                {{ getProchainRendezVous()!.date | date:'dd/MM/yyyy' }} 
-                à {{ getProchainRendezVous()!.heure }}
-              </div>
-              <div class="info-item">
-                <strong>Total factures impayées :</strong> 
-                {{ getTotalFacturesImpayees() | currency:'EUR' }}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  box-shadow: var(--shadow);
+}
 
-      <!-- Onglet Rendez-vous -->
-      <div *ngIf="activeTab === 'rendezvous'" class="tab-pane">
-        <div class="section-header">
-          <h3>📅 Historique des Rendez-vous</h3>
-          <button class="btn btn-primary" (click)="creerRendezVous()">
-            + Nouveau Rendez-vous
-          </button>
-        </div>
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
 
-        <div *ngIf="rendezVous.length === 0" class="empty-state">
-          <p>Aucun rendez-vous trouvé pour ce patient.</p>
-          <button class="btn btn-primary" (click)="creerRendezVous()">
-            Planifier le premier rendez-vous
-          </button>
-        </div>
+.btn-secondary {
+  background: var(--secondary-color);
+  color: white;
+}
 
-        <div *ngIf="rendezVous.length > 0" class="rendezvous-list">
-          <div *ngFor="let rdv of rendezVous" class="rendezvous-item">
-            <div class="rdv-date">
-              <div class="date">{{ rdv.date | date:'dd/MM' }}</div>
-              <div class="time">{{ rdv.heure }}</div>
-            </div>
-            <div class="rdv-info">
-              <h4>{{ rdv.motif }}</h4>
-              <p>Avec {{ rdv.medecinNom }}</p>
-              <span class="statut-badge" [class]="'statut-' + rdv.statut">
-                {{ rdv.statut }}
-              </span>
-            </div>
-            <div class="rdv-actions">
-              <button class="btn btn-small btn-outline">
-                Détails
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+.btn-secondary:hover {
+  background: var(--dark-color);
+  transform: translateY(-2px);
+}
 
-      <!-- Onglet Factures -->
-      <div *ngIf="activeTab === 'factures'" class="tab-pane">
-        <div class="section-header">
-          <h3>🧾 Factures du Patient</h3>
-        </div>
+/* ===== ÉTATS DE CHARGEMENT ===== */
+.loading, .patient-not-found {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+}
 
-        <div *ngIf="factures.length === 0" class="empty-state">
-          <p>Aucune facture trouvée pour ce patient.</p>
-        </div>
+.loading p {
+  color: var(--dark-color);
+  font-size: 18px;
+}
 
-        <div *ngIf="factures.length > 0" class="factures-list">
-          <div *ngFor="let facture of factures" class="facture-item">
-            <div class="facture-header">
-              <h4>Facture #{{ facture.idFacture }}</h4>
-              <span class="montant">{{ facture.montant | currency:'EUR' }}</span>
-            </div>
-            <div class="facture-details">
-              <p><strong>Date :</strong> {{ facture.dateCreation | date:'dd/MM/yyyy' }}</p>
-              <p><strong>Échéance :</strong> {{ facture.dateEcheance | date:'dd/MM/yyyy' }}</p>
-              <p><strong>Statut :</strong> 
-                <span class="statut-badge" [class]="'statut-' + facture.statut">
-                  {{ facture.statut }}
-                </span>
-              </p>
-              <p><strong>Consultations :</strong> {{ facture.consultations.join(', ') }}</p>
-            </div>
-            <div class="facture-actions">
-              <button class="btn btn-small btn-outline">
-                Détails
-              </button>
-              <button *ngIf="facture.statut === 'en attente'" class="btn btn-small btn-success">
-                Payer
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+.patient-not-found h2 {
+  color: var(--accent-color);
+  margin-bottom: 15px;
+}
 
-      <!-- Onglet Historique -->
-      <div *ngIf="activeTab === 'historique'" class="tab-pane">
-        <div class="section-header">
-          <h3>📊 Historique Médical</h3>
-        </div>
-        
-        <div class="empty-state">
-          <p>L'historique médical complet sera disponible prochainement.</p>
-          <p>Cette section inclura :</p>
-          <ul>
-            <li>✅ Antécédents médicaux</li>
-            <li>✅ Ordonnances passées</li>
-            <li>✅ Résultats d'examens</li>
-            <li>✅ Hospitalisations</li>
-          </ul>
-        </div>
-      </div>
+.patient-not-found p {
+  color: var(--dark-color);
+  margin-bottom: 25px;
+}
 
-    </div>
-  </div>
-</div>
+/* ===== EN-TÊTE PATIENT ===== */
+.patient-header {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 25px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  position: relative;
+  overflow: hidden;
+}
+
+.patient-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+}
+
+.patient-avatar .avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  box-shadow: var(--shadow);
+}
+
+.patient-info {
+  flex: 1;
+}
+
+.patient-info h1 {
+  color: var(--secondary-color);
+  margin: 0 0 10px 0;
+  font-size: 2.2em;
+  font-weight: 300;
+}
+
+.patient-meta {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  background: var(--light-color);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  color: var(--dark-color);
+}
+
+.meta-item strong {
+  color: var(--primary-color);
+}
+
+.patient-stats {
+  display: flex;
+  gap: 20px;
+}
+
+.stat {
+  text-align: center;
+  padding: 15px;
+  background: var(--light-color);
+  border-radius: 12px;
+  min-width: 100px;
+}
+
+.stat-number {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--dark-color);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ===== NAVIGATION PAR ONGLETS ===== */
+.tabs-navigation {
+  display: flex;
+  background: white;
+  border-radius: 15px;
+  padding: 10px;
+  margin-bottom: 25px;
+  box-shadow: var(--shadow);
+  gap: 5px;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 15px 20px;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dark-color);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.tab-button:hover {
+  background: var(--light-color);
+  transform: translateY(-1px);
+}
+
+.tab-button.active {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  box-shadow: var(--shadow);
+}
+
+/* ===== CONTENU DES ONGLETS ===== */
+.tab-content {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: var(--shadow);
+  min-height: 400px;
+}
+
+/* ===== ONGLET INFORMATIONS ===== */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 25px;
+}
+
+.info-card {
+  background: var(--light-color);
+  border-radius: 15px;
+  padding: 25px;
+  border-left: 5px solid var(--primary-color);
+  transition: transform 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-3px);
+}
+
+.info-card h3 {
+  color: var(--secondary-color);
+  margin: 0 0 20px 0;
+  font-size: 1.3em;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(189, 195, 199, 0.3);
+}
+
+.info-item strong {
+  color: var(--secondary-color);
+  flex: 1;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+/* ===== SECTIONS GÉNÉRIQUES ===== */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--light-color);
+}
+
+.section-header h3 {
+  color: var(--secondary-color);
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--dark-color);
+}
+
+.empty-state p {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.empty-state ul {
+  text-align: left;
+  display: inline-block;
+  margin: 20px 0;
+}
+
+.empty-state li {
+  margin-bottom: 8px;
+  color: var(--success-color);
+}
+
+/* ===== LISTE RENDEZ-VOUS ===== */
+.rendezvous-list, .factures-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.rendezvous-item, .facture-item {
+  background: var(--light-color);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: all 0.3s ease;
+  border-left: 4px solid var(--primary-color);
+}
+
+.rendezvous-item:hover, .facture-item:hover {
+  transform: translateX(5px);
+  box-shadow: var(--shadow);
+}
+
+.rdv-date {
+  text-align: center;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  min-width: 80px;
+}
+
+.date {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.time {
+  font-size: 0.9em;
+  color: var(--dark-color);
+}
+
+.rdv-info, .facture-header {
+  flex: 1;
+}
+
+.rdv-info h4, .facture-header h4 {
+  margin: 0 0 8px 0;
+  color: var(--secondary-color);
+}
+
+.rdv-info p {
+  margin: 0;
+  color: var(--dark-color);
+  font-size: 14px;
+}
+
+.facture-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.montant {
+  font-size: 1.4em;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.facture-details {
+  flex: 2;
+}
+
+.facture-details p {
+  margin: 5px 0;
+  color: var(--dark-color);
+}
+
+/* ===== BADGES DE STATUT ===== */
+.statut-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.statut-planifié, .statut-en attente {
+  background: var(--warning-color);
+  color: white;
+}
+
+.statut-confirmé, .statut-payée {
+  background: var(--success-color);
+  color: white;
+}
+
+.statut-terminé {
+  background: var(--info-color);
+  color: white;
+}
+
+.statut-annulé, .statut-annulée {
+  background: var(--accent-color);
+  color: white;
+}
+
+.statut-en retard {
+  background: #8e44ad;
+  color: white;
+}
+
+/* ===== ACTIONS ===== */
+.rdv-actions, .facture-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-small {
+  padding: 8px 16px;
+  font-size: 0.8em;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-outline:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn-success {
+  background: var(--success-color);
+  color: white;
+}
+
+.btn-success:hover {
+  background: #219653;
+  transform: translateY(-1px);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .patient-detail-container {
+    padding: 10px;
+  }
+  
+  .patient-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+  
+  .patient-meta {
+    justify-content: center;
+  }
+  
+  .patient-stats {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .tabs-navigation {
+    flex-direction: column;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .header-actions {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .header-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .rendezvous-item, .facture-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .rdv-actions, .facture-actions {
+    justify-content: center;
+  }
+  
+  .facture-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tab-pane {
+  animation: fadeIn 0.5s ease;
+}
+
+.patient-header {
+  animation: fadeIn 0.6s ease;
+}
+
+/* ===== EFFETS DE SURVOL ===== */
+.info-card, .rendezvous-item, .facture-item {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.info-card:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+/* ===== SCROLLBAR PERSONNALISÉE ===== */
+.tab-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.tab-content::-webkit-scrollbar-track {
+  background: var(--light-color);
+  border-radius: 4px;
+}
+
+.tab-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.tab-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}

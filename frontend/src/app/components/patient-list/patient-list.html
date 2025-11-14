@@ -2,7 +2,7 @@
 
 <header class="list-header">
   <h2>👥 Liste des Patients</h2>
-  <button class="btn btn-primary" routerLink="/patients/nouveau">
+  <button class="btn btn-primary" routerLink="/pat">
     + Nouveau Patient
   </button>
 </header>  
@@ -21,6 +21,7 @@
         <th>Prénom</th>
         <th>Date de Naissance</th>
         <th>Téléphone</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -31,6 +32,10 @@
         <td>{{ patient.prenom }}</td>
         <td>{{ patient.date_naissance | date:'dd/MM/yyyy' }}</td>
         <td>{{ patient.telephone }}</td>
+        <td class="actions-cell"> 
+          <button class="btn btn-small btn-primary" [routerLink]="['/patients', patient.idpatient]">
+            Voir Détails
+          </button>
       </tr>
     </tbody>
   </table>

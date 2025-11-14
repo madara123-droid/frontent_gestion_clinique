@@ -32,7 +32,7 @@ export class PatientService {
   // methode pour ajouter un patient
   addPatient(newpatient: PatientModel): void {this.patients.push(newpatient); }
   //methode pour recuperer un patient par son id
-  getidpatient(id:number):PatientModel | undefined{
+  getidPatient(id:number):PatientModel | undefined{
     return this.patients.find(patient => patient.idpatient === id);
   }
 }

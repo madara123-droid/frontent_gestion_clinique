@@ -1,7 +1,9 @@
 <div class="app-container">
   <header class="app-header">
     <div class="header-content">
-      <h1>🏥 Gestion Clinique</h1>
+  <h1 routerLink="/" style="cursor: pointer;">
+  Gestion Clinique
+  </h1>
       <nav class="main-nav">
         <a routerLink="/patients" 
            routerLinkActive="active" 
@@ -22,6 +24,7 @@
           🧾 Factures
         </a>
         
+        
 
       </nav>
     </div>
@@ -36,3 +39,8 @@
     <p>&copy; 2024 Gestion Clinique - Tous droits réservés</p>
   </footer>
 </div>
+<style>
+  h1 {
+    cursor: pointer;
+  }
+</style>

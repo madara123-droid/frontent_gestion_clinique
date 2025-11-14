@@ -8,12 +8,14 @@ import { RendezVousListComponnent } from './components/rendez-vous-list/rendez-v
 import { RendezVousFormComponent } from './components/rendez-vous-form/rendez-vous-form';
 import { PatientFormComponent } from './components/patient-form/patient-form';
 import { FactureListComponent } from './components/facture-list/facture-list';
+import { PatientDetailComponent } from './components/patient-detail/patient-detail';
 export const routes: Routes = [
   
+  {path: 'patients/:id', component: PatientDetailComponent},
   {path: 'factures', component: FactureListComponent},
  {path: '', component:AccueilComponent},
-  { path: 'rendezvous/nouveau', component: RendezVousFormComponent }, 
-  { path: 'patients/nouveau', component: PatientFormComponent },
+  { path: 'rend', component: RendezVousFormComponent }, 
+  { path: 'pat', component: PatientFormComponent },
  {path: 'rendezvous', component: RendezVousListComponnent},
   { path: 'patients', component: PatientListComponent },
   { path: 'medecins', component: MedecinListComponent },
