@@ -1,5 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import{ CommonModule } from '@angular/common'
+
 /*
 cette ligne en dessus permet de d utiliser ngIF,ngFor,ngSwitch
 */
