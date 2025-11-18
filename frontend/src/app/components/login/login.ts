@@ -1,44 +1,45 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { LoginRequest } from '../../models/user';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrls: ['./login.css']
 })
 export class LoginComponent {
-  // ÉTAPE 4.1 - Initialisation du formulaire
-  loginForm;
-
+  loginForm: FormGroup;
   loading = false;
   error = '';
+
+  // Uniquement le compte secrétaire
+  demoAccounts = [
+    { email: 'secretaire@clinique.com', password: 'password123', role: 'Secrétaire Médicale' }
+  ];
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router
-  ) {
+  ) {  
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
   }
-
-  // ÉTAPE 4.2 - Soumission du formulaire
+  
   onSubmit(): void {
     if (this.loginForm.valid) {
       this.loading = true;
       this.error = '';
 
-      this.authService.login(this.loginForm.value as LoginRequest).subscribe({
+      this.authService.login(this.loginForm.value).subscribe({
         next: () => {
-          // Redirection après connexion réussie
+          this.loading = false;
           this.router.navigate(['/']);
         },
         error: (error) => {
@@ -48,12 +49,19 @@ export class LoginComponent {
         }
       });
     } else {
-      // Marquer tous les champs comme touchés pour afficher les erreurs
       this.loginForm.markAllAsTouched();
     }
   }
 
-  // ÉTAPE 4.3 - Méthode utilitaire pour les erreurs
+  // Remplir automatiquement avec le compte secrétaire
+  fillDemoAccount(account: any): void {
+    this.loginForm.patchValue({
+      email: account.email,
+      password: account.password
+    });
+    this.error = '';
+  }
+
   getEmailError(): string {
     const emailControl = this.loginForm.get('email');
     if (emailControl?.errors?.['required'] && emailControl.touched) {

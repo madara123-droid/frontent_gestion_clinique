@@ -114,11 +114,8 @@ getTotalFacturesImpayees(): number {
   }
 
   creerRendezVous(): void {
-    if (this.patient) {
-      this.router.navigate(['/rendezvous/nouveau'], {
-        state: { patientId: this.patient.idpatient }
-      });
-    }
+    
+      this.router.navigate(['/rend'])
   }
 
 }

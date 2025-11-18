@@ -11,11 +11,13 @@
       <div class="form-group">
         <label for="patient">Patient *</label>
         <select 
+        
           id="patient"
           name="patientId" 
           [(ngModel)]="nouveauRendezVous.patientId"
           required
           class="form-control">
+
           <option value="">Sélectionnez un patient</option>
           <option *ngFor="let patient of patients" [value]="patient.idpatient">
             {{ patient.prenom }} {{ patient.nom }}

@@ -1,79 +1,124 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { LoginRequest, AuthResponse, User } from '../models/user';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { User, LoginRequest, AuthResponse } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api/auth'; //C'est une variable qui stocke l'URl de ton backend
   private currentUserSubject = new BehaviorSubject<User | null>(null);
-  /*
-   behaviorsubject est un objet qui a pour but de stocker la dernieres valeur.mais ici sa valeur est user
-   il peut emettre des donnnees a  tous les composant abonnes
-  */
   public currentUser$ = this.currentUserSubject.asObservable();
-  /*
-C’est une version publique du comportement précédent…
-mais en lecture-seule.
 
-Pourquoi le $ à la fin ?
+  // Utilisateurs prédéfinis pour la démo
+  private readonly users: User[] = [
+    {
+      id: 1,
+      email: 'medecin@clinique.com',
+      nom: 'Docteur',
+      prenom: 'Martin',
+      role: 'medecin',
+      isActive: true
+    },
+    {
+      id: 2,
+      email: 'admin@clinique.com',
+      nom: 'Administrateur',
+      prenom: 'System',
+      role: 'administrateur',
+      isActive: true
+    },
+    {
+      id: 3,
+      email: 'secretaire@clinique.com',
+      nom: 'Secrétaire',
+      prenom: 'Dupont',
+      role: 'secretaire',
+      isActive: true
+    }
+  ];
 
-C’est une convention Angular/RxJS pour dire :
-➡️ “Ceci est un Observable.”
-
-🎯 Pourquoi utiliser asObservable() ?
-
-Pour empêcher l’extérieur de modifier l’utilisateur avec .next().
-
-On veut protéger le BehaviorSubject en ne laissant que le service le modifier.  */
-
-  constructor(private http: HttpClient) {
+  constructor() {
     this.loadUserFromStorage();
   }
 
-  // ÉTAPE 2.1 - Connexion
+  // Connexion sans backend
   login(credentials: LoginRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials)
-      .pipe(
-        tap(response => {
+    // Simulation d'un délai réseau
+    return new Observable(observer => {
+      setTimeout(() => {
+        const user = this.users.find(u => 
+          u.email === credentials.email && 
+          this.getDefaultPassword(credentials.email) === credentials.password
+        );
+
+        if (user) {
+          const response: AuthResponse = {
+            token: this.generateToken(user),
+            user: user
+          };
+          
           // Stockage dans le localStorage
           localStorage.setItem('token', response.token);
           localStorage.setItem('user', JSON.stringify(response.user));
           this.currentUserSubject.next(response.user);
-        })
-      );
+          
+          observer.next(response);
+          observer.complete();
+        } else {
+          observer.error(new Error('Email ou mot de passe incorrect'));
+        }
+      }, 1000); // Délai de 1 seconde pour simuler une requête réseau
+    });
   }
 
-  // ÉTAPE 2.2 - Déconnexion
+  // Déconnexion
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.currentUserSubject.next(null);
   }
 
-  // ÉTAPE 2.3 - Vérifier si connecté
+  // Vérifier si connecté
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
   }
 
-  // ÉTAPE 2.4 - Récupérer le token
+  // Récupérer le token
   getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  // ÉTAPE 2.5 - Récupérer le rôle
+  // Récupérer le rôle
   getUserRole(): string {
     const user = this.currentUserSubject.value;
     return user?.role || '';
   }
 
-  // ÉTAPE 2.6 - Charger l'utilisateur au démarrage
+  // Charger l'utilisateur au démarrage
   private loadUserFromStorage(): void {
     const userData = localStorage.getItem('user');
     if (userData) {
       this.currentUserSubject.next(JSON.parse(userData));
     }
+  }
+
+  // Mot de passe par défaut basé sur l'email
+  private getDefaultPassword(email: string): string {
+    return 'password123'; // Mot de passe unique pour tous les utilisateurs de démo
+  }
+
+  // Générer un token simple
+  private generateToken(user: User): string {
+    return btoa(JSON.stringify({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+      timestamp: Date.now()
+    }));
+  }
+
+  // Méthode pour réinitialiser le mot de passe (optionnel)
+  resetPassword(email: string): Observable<boolean> {
+    return of(this.users.some(u => u.email === email));
   }
 }

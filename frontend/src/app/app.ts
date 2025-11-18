@@ -1,23 +1,27 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
-import { PatientListComponent } from './components/patient-list/patient-list';
-import { MedecinListComponent } from './components/medecin/medecin-list/medecin-list';
+
+// Import du service d'authentification
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
-  standalone: true, // ❗ Important : c’est un standalone component
+  standalone: true,
   imports: [
     CommonModule,
     RouterOutlet,
     RouterLink,
-    RouterLinkActive,
-    PatientListComponent,
-    MedecinListComponent
+    RouterLinkActive
+    // ❗ Supprimez PatientListComponent et MedecinListComponent 
+    // car ils sont chargés via le router, pas directement ici
   ],
   templateUrl: './app.html',
-  styleUrls: ['./app.css'] // ❗ "styleUrls" (pluriel) et non "styleUrl"
+  styleUrls: ['./app.css']
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'Gestion Clinique';
+
+  // Injection du service d'authentification
+  constructor(public authService: AuthService) {}
 }

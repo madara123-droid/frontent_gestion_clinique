@@ -1,23 +1,38 @@
 <div class="login-container">
   <div class="login-card">
-    <!-- Logo ou titre de la clinique -->
+    <!-- En-tête -->
     <div class="login-header">
-      <h2>Connexion à la Clinique</h2>
-      <p>Accédez à votre espace professionnel</p>
+      <div class="clinic-logo">
+        🏥
+      </div>
+      <h1>Espace Professionnel</h1>
+      <p class="subtitle">Centre Médical Excellence</p>
     </div>
 
-    <!-- Formulaire de connexion -->
+    <!-- Compte de démonstration -->
+    <div class="demo-section">
+      <h3>Accès Rapide</h3>
+      <button type="button" (click)="fillDemoAccount(demoAccounts[0])" class="demo-button">
+        <span class="demo-icon">👩‍💼</span>
+        <div class="demo-info">
+          <div class="demo-role">Secrétaire Médicale</div>
+          <div class="demo-email">secretaire@clinique.com</div>
+        </div>
+      </button>
+    </div>
+
+    <!-- Formulaire -->
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
       
-      <!-- Champ Email -->
+      <!-- Email -->
       <div class="form-group">
-        <label for="email" class="form-label">Email</label>
+        <label for="email" class="form-label required">Email</label>
         <input
           type="email"
           id="email"
           formControlName="email"
           class="form-control"
-          placeholder="votre@email.com"
+          placeholder="email@clinique.com"
           [class.error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
         >
         <div class="error-message" *ngIf="getEmailError()">
@@ -25,9 +40,9 @@
         </div>
       </div>
 
-      <!-- Champ Mot de passe -->
+      <!-- Mot de passe -->
       <div class="form-group">
-        <label for="password" class="form-label">Mot de passe</label>
+        <label for="password" class="form-label required">Mot de passe</label>
         <input
           type="password"
           id="password"
@@ -41,27 +56,31 @@
         </div>
       </div>
 
-      <!-- Bouton de soumission -->
-      <button 
-        type="submit" 
-        class="btn btn-primary btn-login"
-        [disabled]="loginForm.invalid || loading"
-      >
-        <span *ngIf="!loading">Se connecter</span>
-        <span *ngIf="loading">Connexion en cours...</span>
-      </button>
-
-      <!-- Message d'erreur général -->
-      <div *ngIf="error" class="alert alert-error">
-        <i class="icon-error"></i>
+      <!-- Erreur -->
+      <div *ngIf="error" class="alert-error">
         {{ error }}
       </div>
 
+      <!-- Bouton de soumission -->
+      <button 
+        type="submit" 
+        class="submit-button"
+        [disabled]="loginForm.invalid || loading"
+      >
+        <span *ngIf="!loading">Se connecter</span>
+        <span *ngIf="loading">Connexion...</span>
+      </button>
     </form>
 
-    <!-- Informations supplémentaires -->
+    <!-- Pied de page -->
     <div class="login-footer">
-      <p>En cas de problème de connexion, contactez l'administrateur</p>
+      <div class="password-hint">
+        <strong>Mot de passe :</strong> password123
+      </div>
+      <div class="contact-info">
+        <p>Assistance technique : 01 23 45 67 89</p>
+        <p>support@clinique-excellence.fr</p>
+      </div>
     </div>
   </div>
 </div>

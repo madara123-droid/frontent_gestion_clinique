@@ -1,0 +1,330 @@
+/* ===== VARIABLES ET RESET ===== */
+.facture-form {
+  --primary-color: #3498db;
+  --primary-dark: #2980b9;
+  --secondary-color: #2c3e50;
+  --accent-color: #e74c3c;
+  --success-color: #27ae60;
+  --warning-color: #f39c12;
+  --info-color: #17a2b8;
+  --light-color: #ecf0f1;
+  --dark-color: #34495e;
+  --border-color: #bdc3c7;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.15);
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-card: linear-gradient(135deg, #3498db, #2980b9);
+  
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 40px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.8s ease;
+}
+
+.facture-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color), var(--accent-color));
+}
+
+/* ===== EN-TÊTE ===== */
+.facture-form h2 {
+  color: var(--secondary-color);
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+  font-weight: 300;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== GROUPES DE FORMULAIRES ===== */
+.form-group {
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--secondary-color);
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+/* ===== CHAMPS DE FORMULAIRE ===== */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 15px 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 1em;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--light-color);
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+  background: white;
+  transform: translateY(-2px);
+}
+
+.form-group input:read-only {
+  background: #f8f9fa;
+  color: var(--dark-color);
+  border-color: #e9ecef;
+}
+
+/* ===== BOUTONS ===== */
+.actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 40px;
+  justify-content: flex-end;
+}
+
+.actions button {
+  padding: 16px 32px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.actions button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transition: all 0.4s ease;
+  transform: translate(-50%, -50%);
+}
+
+.actions button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Bouton Principal */
+.actions button[type="submit"] {
+  background: var(--gradient-card);
+  color: white;
+  box-shadow: var(--shadow);
+}
+
+.actions button[type="submit"]:hover:not(:disabled) {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: var(--shadow-hover);
+}
+
+.actions button[type="submit"]:disabled {
+  background: var(--border-color);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Bouton Secondaire */
+.actions button[type="button"] {
+  background: var(--secondary-color);
+  color: white;
+  box-shadow: var(--shadow);
+}
+
+.actions button[type="button"]:hover {
+  background: var(--dark-color);
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: var(--shadow-hover);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Animation des champs */
+.form-group {
+  animation: fadeInUp 0.6s ease both;
+}
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.2s; }
+.form-group:nth-child(3) { animation-delay: 0.3s; }
+.form-group:nth-child(4) { animation-delay: 0.4s; }
+.form-group:nth-child(5) { animation-delay: 0.5s; }
+.form-group:nth-child(6) { animation-delay: 0.6s; }
+.form-group:nth-child(7) { animation-delay: 0.7s; }
+.form-group:nth-child(8) { animation-delay: 0.8s; }
+
+.actions {
+  animation: fadeInUp 0.8s ease 0.9s both;
+}
+
+/* Effet de pulsation au survol */
+.form-group input:hover:not(:read-only),
+.form-group select:hover,
+.form-group textarea:hover {
+  animation: pulse 2s infinite;
+}
+
+/* ===== EFFETS SPÉCIAUX ===== */
+/* Lueur au survol */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  filter: drop-shadow(0 5px 15px rgba(52, 152, 219, 0.3));
+}
+
+/* Transition pour tous les éléments interactifs */
+.form-group input,
+.form-group select,
+.form-group textarea,
+.actions button {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Amélioration de la lisibilité */
+.facture-form {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Style pour les placeholders */
+::placeholder {
+  color: #95a5a6;
+  opacity: 0.7;
+}
+
+/* Style spécifique pour les selects */
+.form-group select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='%23333' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 12px;
+  padding-right: 45px;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .facture-form {
+    margin: 15px;
+    padding: 30px 20px;
+    max-width: none;
+  }
+  
+  .facture-form h2 {
+    font-size: 2em;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 12px 15px;
+    font-size: 0.95em;
+  }
+  
+  .actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .actions button {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .facture-form {
+    padding: 25px 15px;
+    border-radius: 15px;
+  }
+  
+  .facture-form h2 {
+    font-size: 1.8em;
+  }
+  
+  .form-group label {
+    font-size: 1em;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+}
+
+/* ===== INDICATEURS DE CHAMP REQUIS ===== */
+.form-group label::after {
+  content: ' *';
+  color: var(--accent-color);
+}
+
+/* Exception pour les labels sans astérisque */
+.form-group:has(input:not([required])) label::after,
+.form-group:has(select:not([required])) label::after,
+.form-group:has(textarea:not([required])) label::after {
+  content: '';
+}
+
+/* Style pour les champs invalides */
+.form-group input.ng-invalid.ng-touched,
+.form-group select.ng-invalid.ng-touched,
+.form-group textarea.ng-invalid.ng-touched {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.1);
+}
